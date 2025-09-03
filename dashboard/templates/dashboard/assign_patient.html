@@ -1,0 +1,66 @@
+{% extends 'accounts/base.html' %}
+
+{% block title %}Assign Patient - Vyze{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">
+                    <i class="fas fa-user-plus me-2"></i>
+                    Assign New Patient
+                </h4>
+            </div>
+            <div class="card-body">
+                <p class="text-muted mb-4">
+                    Enter a patient's unique ID to assign them to your care. Only patients who have registered with Vyze can be assigned.
+                </p>
+
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="mb-4">
+                        <label for="patient_id" class="form-label h6">Patient ID</label>
+                        <input type="text" class="form-control form-control-lg" id="patient_id" name="patient_id"
+                               placeholder="Enter 8-character patient ID (e.g., ABC12345)" required
+                               pattern="[A-Z0-9]{8}" maxlength="8" style="text-transform: uppercase;">
+                        <div class="form-text">
+                            Patient IDs are case-insensitive and contain 8 alphanumeric characters.
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-lg w-100 mb-3">
+                        <i class="fas fa-search me-2"></i>
+                        Find & Assign Patient
+                    </button>
+                </form>
+
+                <div class="mt-4">
+                    <h6 class="text-muted mb-3">How to get a Patient ID:</h6>
+                    <ol class="text-muted small">
+                        <li>Patient must register on Vyze as a patient</li>
+                        <li>Patient can find their ID on their dashboard</li>
+                        <li>Enter the ID above to establish the doctor-patient relationship</li>
+                        <li>Once assigned, you'll have access to their mood data and can add notes</li>
+                    </ol>
+                </div>
+
+                <div class="mt-4 pt-3 border-top">
+                    <a href="{% url 'doctor_dashboard' %}" class="btn btn-outline-secondary">
+                        <i class="fas fa-arrow-left me-2"></i>
+                        Back to Dashboard
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.getElementById('patient_id').addEventListener('input', function() {
+    this.value = this.value.toUpperCase();
+});
+</script>
+{% endblock %}

@@ -1,0 +1,131 @@
+{% extends 'accounts/base.html' %}
+
+{% block title %}Positive Quotes - Vyze{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+        <div class="card">
+            <div class="card-header bg-warning text-dark">
+                <h4 class="mb-0">
+                    <i class="fas fa-quote-left me-2"></i>
+                    Daily Inspiration
+                </h4>
+            </div>
+            <div class="card-body text-center">
+                <div class="quote-container mb-4">
+                    <i class="fas fa-quote-left fa-2x text-muted mb-3"></i>
+                    <blockquote class="blockquote">
+                        <p class="mb-0 display-6 text-primary">"{{ quote }}"</p>
+                    </blockquote>
+                    <i class="fas fa-quote-right fa-2x text-muted mt-3"></i>
+                </div>
+
+                <div class="mb-4">
+                    <button class="btn btn-warning btn-lg" onclick="getNewQuote()">
+                        <i class="fas fa-sync-alt me-2"></i>
+                        Get New Quote
+                    </button>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <i class="fas fa-heart fa-2x text-danger mb-2"></i>
+                                <h6>Remember</h6>
+                                <p class="small">Your mental health journey is unique and valuable.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <i class="fas fa-star fa-2x text-warning mb-2"></i>
+                                <h6>You're Doing Great</h6>
+                                <p class="small">Every small step counts towards your wellbeing.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-4">
+                    <a href="{% url 'patient_dashboard' %}" class="btn btn-outline-primary">
+                        <i class="fas fa-arrow-left me-2"></i>
+                        Back to Dashboard
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<style>
+.quote-container {
+    padding: 2rem;
+    background: linear-gradient(135deg, #ffeaa7 0%, #fab1a0 100%);
+    border-radius: 15px;
+    position: relative;
+}
+
+.blockquote {
+    font-style: italic;
+    border: none;
+    padding: 0;
+}
+
+.blockquote p {
+    font-size: 1.5rem;
+    line-height: 1.4;
+}
+</style>
+
+<script>
+const quotes = [
+    "You are stronger than you think.",
+    "Every day is a new beginning.",
+    "Your mental health matters.",
+    "Small steps lead to big changes.",
+    "You are not alone in this journey.",
+    "Be kind to yourself today.",
+    "Your feelings are valid.",
+    "Progress, not perfection.",
+    "You deserve peace and happiness.",
+    "One day at a time.",
+    "Your mind is a powerful thing.",
+    "Healing takes time, and that's okay.",
+    "You are worthy of love and care.",
+    "Every breath is a fresh start.",
+    "Your story matters.",
+    "Self-compassion is a superpower.",
+    "You are enough, just as you are.",
+    "Growth happens outside your comfort zone.",
+    "Your mental health is a priority.",
+    "You have the power to change your story."
+];
+
+function getNewQuote() {
+    const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+    document.querySelector('.blockquote p').textContent = `"${randomQuote}"`;
+
+    // Add a nice animation
+    const quoteContainer = document.querySelector('.quote-container');
+    quoteContainer.style.animation = 'none';
+    setTimeout(() => {
+        quoteContainer.style.animation = 'fadeIn 0.5s ease-in-out';
+    }, 10);
+}
+
+// Add fade-in animation
+const style = document.createElement('style');
+style.textContent = `
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+`;
+document.head.appendChild(style);
+</script>
+{% endblock %}

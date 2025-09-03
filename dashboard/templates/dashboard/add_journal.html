@@ -1,0 +1,460 @@
+{% extends 'accounts/base.html' %}
+
+{% block title %}Create Journal Entry - Vyze{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <!-- Header Section -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="d-flex align-items-center justify-content-between">
+                <div>
+                    <h2 class="mb-1 gradient-text">
+                        <i class="fas fa-book-open me-3"></i>
+                        Create Journal Entry
+                    </h2>
+                    <p class="text-muted mb-0">Express your thoughts and feelings in a safe, private space</p>
+                </div>
+                <div class="text-end">
+                    <div class="d-flex align-items-center">
+                        <i class="fas fa-calendar-alt me-2 text-primary"></i>
+                        <span class="fw-semibold">{{ "now"|date:"M d, Y" }}</span>
+                    </div>
+                    <small class="text-muted">Today's Reflection</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Main Journal Form -->
+        <div class="col-lg-8">
+            <div class="modern-card p-4 mb-4">
+                <form method="post" id="journalForm">
+                    {% csrf_token %}
+
+                    <!-- Title Section -->
+                    <div class="mb-4">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="icon-circle me-3">
+                                <i class="fas fa-heading text-primary"></i>
+                            </div>
+                            <div>
+                                <h5 class="mb-1">Journal Title</h5>
+                                <small class="text-muted">Give your entry a meaningful title</small>
+                            </div>
+                        </div>
+                        <div class="input-group-modern">
+                            {{ form.title }}
+                            <div class="input-feedback">
+                                <small class="text-muted">
+                                    <i class="fas fa-lightbulb me-1"></i>
+                                    Try something like "A Day of Reflection" or "My Current Feelings"
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Content Section -->
+                    <div class="mb-4">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="icon-circle me-3">
+                                <i class="fas fa-pen-fancy text-secondary"></i>
+                            </div>
+                            <div>
+                                <h5 class="mb-1">Your Thoughts & Feelings</h5>
+                                <small class="text-muted">Write freely about what's on your mind</small>
+                            </div>
+                        </div>
+                        <div class="textarea-container">
+                            {{ form.content }}
+                            <div class="textarea-footer">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <small class="text-muted">
+                                        <i class="fas fa-lock me-1"></i>
+                                        Your entries are private and secure
+                                    </small>
+                                    <div class="character-count">
+                                        <span id="charCount">0</span> characters
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mood Context (Optional) -->
+                    <div class="mb-4">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="icon-circle me-3">
+                                <i class="fas fa-smile text-success"></i>
+                            </div>
+                            <div>
+                                <h6 class="mb-1">Current Mood (Optional)</h6>
+                                <small class="text-muted">How are you feeling right now?</small>
+                            </div>
+                        </div>
+                        <div class="mood-selector">
+                            <div class="mood-options">
+                                <button type="button" class="mood-btn" data-mood="excellent">
+                                    <i class="fas fa-laugh-beam"></i>
+                                    <span>Excellent</span>
+                                </button>
+                                <button type="button" class="mood-btn" data-mood="good">
+                                    <i class="fas fa-smile"></i>
+                                    <span>Good</span>
+                                </button>
+                                <button type="button" class="mood-btn" data-mood="neutral">
+                                    <i class="fas fa-meh"></i>
+                                    <span>Neutral</span>
+                                </button>
+                                <button type="button" class="mood-btn" data-mood="challenging">
+                                    <i class="fas fa-frown"></i>
+                                    <span>Challenging</span>
+                                </button>
+                                <button type="button" class="mood-btn" data-mood="difficult">
+                                    <i class="fas fa-sad-tear"></i>
+                                    <span>Difficult</span>
+                                </button>
+                            </div>
+                            <input type="hidden" name="selected_mood" id="selectedMood">
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="d-flex gap-3">
+                        <button type="submit" class="btn-modern btn-primary-modern flex-fill">
+                            <i class="fas fa-save me-2"></i>
+                            Save Journal Entry
+                        </button>
+                        <a href="{% url 'patient_dashboard' %}" class="btn-modern btn-secondary-modern">
+                            <i class="fas fa-arrow-left me-2"></i>
+                            Back to Dashboard
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Sidebar with Tips and Inspiration -->
+        <div class="col-lg-4">
+            <!-- Writing Tips -->
+            <div class="modern-card p-4 mb-4">
+                <h6 class="mb-3">
+                    <i class="fas fa-lightbulb text-warning me-2"></i>
+                    Writing Tips
+                </h6>
+                <div class="tips-list">
+                    <div class="tip-item">
+                        <i class="fas fa-check-circle text-success me-2"></i>
+                        <small>Write about what you're grateful for today</small>
+                    </div>
+                    <div class="tip-item">
+                        <i class="fas fa-check-circle text-success me-2"></i>
+                        <small>Describe your emotions without judgment</small>
+                    </div>
+                    <div class="tip-item">
+                        <i class="fas fa-check-circle text-success me-2"></i>
+                        <small>Note any patterns in your thoughts</small>
+                    </div>
+                    <div class="tip-item">
+                        <i class="fas fa-check-circle text-success me-2"></i>
+                        <small>Include both positive and challenging moments</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Prompts -->
+            <div class="modern-card p-4 mb-4">
+                <h6 class="mb-3">
+                    <i class="fas fa-question-circle text-info me-2"></i>
+                    Writing Prompts
+                </h6>
+                <div class="prompts-list">
+                    <button class="prompt-btn" onclick="usePrompt('What made me smile today?')">
+                        What made me smile today?
+                    </button>
+                    <button class="prompt-btn" onclick="usePrompt('What am I looking forward to?')">
+                        What am I looking forward to?
+                    </button>
+                    <button class="prompt-btn" onclick="usePrompt('What challenged me today?')">
+                        What challenged me today?
+                    </button>
+                    <button class="prompt-btn" onclick="usePrompt('What am I grateful for?')">
+                        What am I grateful for?
+                    </button>
+                </div>
+            </div>
+
+            <!-- Progress Indicator -->
+            <div class="modern-card p-4">
+                <h6 class="mb-3">
+                    <i class="fas fa-chart-line text-primary me-2"></i>
+                    Your Progress
+                </h6>
+                <div class="progress-info">
+                    <div class="d-flex justify-content-between mb-2">
+                        <small>This Week</small>
+                        <small class="fw-semibold">{{ user.journal_set.count }} entries</small>
+                    </div>
+                    <div class="progress-modern">
+                        <div class="progress-bar" style="width: {% widthratio user.journal_set.count 10 1 %}0%"></div>
+                    </div>
+                    <small class="text-muted mt-2 d-block">
+                        <i class="fas fa-trophy me-1"></i>
+                        Keep up the great work!
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<style>
+/* Modern Input Styling */
+.input-group-modern {
+    position: relative;
+}
+
+.input-group-modern input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid var(--border);
+    border-radius: var(--border-radius);
+    font-size: 16px;
+    transition: var(--transition);
+    background: var(--light);
+}
+
+.input-group-modern input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+    outline: none;
+}
+
+.input-feedback {
+    margin-top: 8px;
+}
+
+/* Textarea Styling */
+.textarea-container {
+    position: relative;
+}
+
+.textarea-container textarea {
+    width: 100%;
+    min-height: 300px;
+    padding: 16px;
+    border: 2px solid var(--border);
+    border-radius: var(--border-radius);
+    font-size: 16px;
+    line-height: 1.6;
+    resize: vertical;
+    transition: var(--transition);
+    background: var(--light);
+    font-family: var(--font-primary);
+}
+
+.textarea-container textarea:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+    outline: none;
+}
+
+.textarea-footer {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border-light);
+}
+
+/* Icon Circles */
+.icon-circle {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary-light), var(--primary));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    box-shadow: var(--shadow-light);
+}
+
+/* Mood Selector */
+.mood-selector {
+    margin-top: 16px;
+}
+
+.mood-options {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.mood-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 12px;
+    border: 2px solid var(--border);
+    border-radius: var(--border-radius);
+    background: white;
+    transition: var(--transition);
+    cursor: pointer;
+    min-width: 80px;
+}
+
+.mood-btn:hover {
+    border-color: var(--primary);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-medium);
+}
+
+.mood-btn.active {
+    border-color: var(--primary);
+    background: var(--primary-light);
+    color: var(--primary-dark);
+}
+
+.mood-btn i {
+    font-size: 24px;
+    margin-bottom: 4px;
+}
+
+.mood-btn span {
+    font-size: 12px;
+    font-weight: 600;
+}
+
+/* Tips and Prompts */
+.tips-list, .prompts-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.tip-item, .prompt-btn {
+    padding: 12px;
+    background: var(--light);
+    border-radius: 8px;
+    border: 1px solid var(--border-light);
+    text-align: left;
+    transition: var(--transition);
+    cursor: pointer;
+}
+
+.prompt-btn:hover {
+    background: var(--primary-light);
+    border-color: var(--primary);
+    transform: translateY(-1px);
+}
+
+.prompt-btn:active {
+    transform: translateY(0);
+}
+
+/* Progress Info */
+.progress-info {
+    text-align: center;
+}
+
+.progress-modern {
+    height: 8px;
+    border-radius: 4px;
+    background: var(--border-light);
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    background: var(--primary-gradient);
+    transition: width 0.3s ease;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .mood-options {
+        justify-content: center;
+    }
+
+    .mood-btn {
+        min-width: 70px;
+    }
+
+    .d-flex.gap-3 {
+        flex-direction: column;
+    }
+
+    .btn-modern {
+        margin-bottom: 12px;
+    }
+}
+</style>
+
+<script>
+// Character counter for textarea
+document.addEventListener('DOMContentLoaded', function() {
+    const textarea = document.querySelector('textarea[name="content"]');
+    const charCount = document.getElementById('charCount');
+
+    if (textarea && charCount) {
+        textarea.addEventListener('input', function() {
+            charCount.textContent = this.value.length;
+        });
+    }
+
+    // Mood selector functionality
+    const moodBtns = document.querySelectorAll('.mood-btn');
+    const selectedMoodInput = document.getElementById('selectedMood');
+
+    moodBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            // Remove active class from all buttons
+            moodBtns.forEach(b => b.classList.remove('active'));
+            // Add active class to clicked button
+            this.classList.add('active');
+            // Set the selected mood value
+            selectedMoodInput.value = this.dataset.mood;
+        });
+    });
+});
+
+// Function to use writing prompts
+function usePrompt(promptText) {
+    const textarea = document.querySelector('textarea[name="content"]');
+    if (textarea) {
+        if (textarea.value.trim() !== '') {
+            textarea.value += '\n\n';
+        }
+        textarea.value += promptText + '\n\n';
+        textarea.focus();
+        // Update character count
+        document.getElementById('charCount').textContent = textarea.value.length;
+    }
+}
+
+// Form validation
+document.getElementById('journalForm').addEventListener('submit', function(e) {
+    const title = document.querySelector('input[name="title"]').value.trim();
+    const content = document.querySelector('textarea[name="content"]').value.trim();
+
+    if (!title) {
+        alert('Please give your journal entry a title.');
+        e.preventDefault();
+        return false;
+    }
+
+    if (!content) {
+        alert('Please write something in your journal entry.');
+        e.preventDefault();
+        return false;
+    }
+
+    // Show loading state
+    const submitBtn = this.querySelector('button[type="submit"]');
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Saving...';
+    submitBtn.disabled = true;
+});
+</script>
+{% endblock %}

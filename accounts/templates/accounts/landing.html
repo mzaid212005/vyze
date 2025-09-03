@@ -1,0 +1,1133 @@
+{% extends 'accounts/base.html' %}
+
+{% block title %}Vyze - Professional Mental Health Monitoring{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section">
+    <!-- Background Pattern -->
+    <div class="hero-bg-pattern">
+        <div class="pattern-circle circle-1"></div>
+        <div class="pattern-circle circle-2"></div>
+        <div class="pattern-circle circle-3"></div>
+        <div class="pattern-wave wave-1"></div>
+        <div class="pattern-wave wave-2"></div>
+    </div>
+
+    <div class="container-fluid">
+        <!-- Navigation Bar -->
+        <nav class="navbar navbar-expand-lg navbar-light fixed-top" style="background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); box-shadow: 0 2px 20px rgba(0,0,0,0.1);">
+            <div class="container">
+                <a class="navbar-brand d-flex align-items-center" href="#">
+                    <div class="vyze-logo me-3">
+                        <i class="fas fa-brain fa-2x" style="color: #667eea;"></i>
+                    </div>
+                    <span class="fw-bold fs-2" style="background: linear-gradient(45deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Vyze</span>
+                </a>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link fw-semibold" href="#features">Features</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link fw-semibold" href="#about">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link fw-semibold" href="#contact">Contact</a>
+                        </li>
+                        <li class="nav-item ms-3">
+                            <a href="{% url 'login' %}" class="btn btn-outline-primary me-2">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{% url 'register' %}" class="btn btn-primary me-2">Register</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#features" class="btn btn-outline-primary">Explore</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <div class="row min-vh-100 align-items-center" style="padding-top: 80px;">
+            <div class="col-lg-6">
+                <div class="hero-content p-5">
+                    <div class="hero-badge mb-4">
+                        <span class="badge bg-primary px-3 py-2" style="background: linear-gradient(45deg, #667eea, #764ba2) !important; color: white;">
+                            <i class="fas fa-star me-1"></i>
+                            #1 Mental Health Platform
+                        </span>
+                    </div>
+
+                    <!-- Big Vyze Title -->
+                    <div class="vyze-main-title mb-4">
+                        <h1 class="display-1 fw-bold" style="background: linear-gradient(45deg, #667eea, #764ba2, #f093fb, #f5576c); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-size: 4rem; line-height: 1;">
+                            Vyze
+                        </h1>
+                        <p class="text-muted fs-5 mb-4">Your AI-Powered Mental Wellness Companion</p>
+                    </div>
+
+                    <h2 class="display-4 fw-bold mb-4">
+                        Transform Your<br>
+                        <span class="gradient-text">Mental Wellness</span><br>
+                        Journey
+                    </h2>
+
+                    <p class="lead mb-4 text-muted" style="font-size: 1.2rem; line-height: 1.6;">
+                        Experience professional-grade mental health monitoring with our
+                        intuitive platform. Track moods, journal thoughts, and engage in
+                        therapeutic activities designed by mental health experts.
+                    </p>
+
+                    <div class="hero-stats mb-5">
+                        <div class="row g-4">
+                            <div class="col-auto">
+                                <div class="stat-item">
+                                    <div class="stat-number">10K+</div>
+                                    <div class="stat-label">Active Users</div>
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <div class="stat-item">
+                                    <div class="stat-number">95%</div>
+                                    <div class="stat-label">Satisfaction</div>
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <div class="stat-item">
+                                    <div class="stat-number">24/7</div>
+                                    <div class="stat-label">Support</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="hero-actions">
+                        <a href="#features" class="btn btn-primary-modern btn-lg px-5 py-3" style="background: linear-gradient(45deg, #667eea, #764ba2); border: none; color: white; box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);">
+                            <i class="fas fa-arrow-down me-2"></i>
+                            Explore Features
+                        </a>
+                    </div>
+
+                    <div class="hero-trust mt-5">
+                        <small class="text-muted">
+                            <i class="fas fa-shield-alt me-1"></i>
+                            HIPAA Compliant • End-to-End Encrypted • Professional Support
+                        </small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="hero-visual p-5">
+                    <!-- Mental Health Illustrations -->
+                    <div class="hero-illustrations">
+                        <div class="illustration-1">
+                            <div class="floating-illustration brain-icon">
+                                <i class="fas fa-brain fa-4x text-primary"></i>
+                            </div>
+                        </div>
+                        <div class="illustration-2">
+                            <div class="floating-illustration heart-icon">
+                                <i class="fas fa-heart fa-3x text-danger"></i>
+                            </div>
+                        </div>
+                        <div class="illustration-3">
+                            <div class="floating-illustration meditation-icon">
+                                <i class="fas fa-spa fa-3x text-success"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-preview">
+                        <div class="preview-header">
+                            <div class="preview-nav">
+                                <div class="nav-dots">
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                </div>
+                                <div class="nav-profile">
+                                    <i class="fas fa-user-circle"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="preview-content">
+                            <div class="preview-stats">
+                                <div class="stat-card">
+                                    <div class="stat-icon">
+                                        <i class="fas fa-smile"></i>
+                                    </div>
+                                    <div class="stat-info">
+                                        <div class="stat-value">8.5</div>
+                                        <div class="stat-title">Today's Mood</div>
+                                    </div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-icon">
+                                        <i class="fas fa-fire"></i>
+                                    </div>
+                                    <div class="stat-info">
+                                        <div class="stat-value">12</div>
+                                        <div class="stat-title">Day Streak</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="preview-chart">
+                                <div class="chart-placeholder">
+                                    <div class="chart-line"></div>
+                                    <div class="chart-bars">
+                                        <div class="bar"></div>
+                                        <div class="bar active"></div>
+                                        <div class="bar"></div>
+                                        <div class="bar"></div>
+                                        <div class="bar"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section id="features" class="features-section py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center mb-5">
+                <h2 class="display-4 fw-bold mb-3">Powerful Features</h2>
+                <p class="lead text-muted">Everything you need for comprehensive mental health monitoring</p>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-card modern-card p-4 h-100">
+                    <div class="feature-icon mb-4">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h4 class="mb-3">Advanced Mood Tracking</h4>
+                    <p class="text-muted mb-4">
+                        Interactive mood logging with emoji feedback, trend analysis,
+                        and personalized insights to understand your emotional patterns.
+                    </p>
+                    <ul class="feature-list">
+                        <li>Real-time mood visualization</li>
+                        <li>Pattern recognition</li>
+                        <li>Customizable triggers</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-card modern-card p-4 h-100">
+                    <div class="feature-icon mb-4">
+                        <i class="fas fa-book-open"></i>
+                    </div>
+                    <h4 class="mb-3">Therapeutic Journaling</h4>
+                    <p class="text-muted mb-4">
+                        Guided journaling prompts, mood-tagged entries, and
+                        AI-powered insights to enhance your self-reflection journey.
+                    </p>
+                    <ul class="feature-list">
+                        <li>Guided prompts</li>
+                        <li>Mood correlation</li>
+                        <li>Progress tracking</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-card modern-card p-4 h-100">
+                    <div class="feature-icon mb-4">
+                        <i class="fas fa-gamepad"></i>
+                    </div>
+                    <h4 class="mb-3">Mindfulness Games</h4>
+                    <p class="text-muted mb-4">
+                        Engaging mini-games and breathing exercises designed
+                        to reduce stress and improve mental clarity.
+                    </p>
+                    <ul class="feature-list">
+                        <li>Memory challenges</li>
+                        <li>Breathing exercises</li>
+                        <li>Progress rewards</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-card modern-card p-4 h-100">
+                    <div class="feature-icon mb-4">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h4 class="mb-3">Analytics Dashboard</h4>
+                    <p class="text-muted mb-4">
+                        Comprehensive analytics with charts, trends, and
+                        actionable insights to monitor your mental health progress.
+                    </p>
+                    <ul class="feature-list">
+                        <li>Trend analysis</li>
+                        <li>Progress reports</li>
+                        <li>Data export</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-card modern-card p-4 h-100">
+                    <div class="feature-icon mb-4">
+                        <i class="fas fa-user-md"></i>
+                    </div>
+                    <h4 class="mb-3">Professional Support</h4>
+                    <p class="text-muted mb-4">
+                        Connect with licensed therapists and receive
+                        personalized feedback on your mental health journey.
+                    </p>
+                    <ul class="feature-list">
+                        <li>Licensed therapists</li>
+                        <li>Secure messaging</li>
+                        <li>Emergency support</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-card modern-card p-4 h-100">
+                    <div class="feature-icon mb-4">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h4 class="mb-3">Mobile First</h4>
+                    <p class="text-muted mb-4">
+                        Access your mental health dashboard anywhere with
+                        our responsive design optimized for all devices.
+                    </p>
+                    <ul class="feature-list">
+                        <li>Cross-platform</li>
+                        <li>Offline support</li>
+                        <li>Push notifications</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Advanced Features Section -->
+<section class="advanced-features-section py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center mb-5">
+                <h2 class="display-4 fw-bold mb-3">Advanced Mental Health Features</h2>
+                <p class="lead text-muted">Cutting-edge technology for comprehensive mental wellness support</p>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-card-modern modern-card p-4 h-100">
+                    <div class="feature-icon-modern mb-4">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h4 class="mb-3">AI Mood Prediction</h4>
+                    <p class="text-muted mb-4">
+                        Advanced machine learning algorithms predict your mood patterns and provide
+                        personalized insights for the upcoming week.
+                    </p>
+                    <ul class="feature-list-modern">
+                        <li>7-day mood forecasting</li>
+                        <li>Pattern recognition</li>
+                        <li>Personalized recommendations</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-card-modern modern-card p-4 h-100">
+                    <div class="feature-icon-modern mb-4">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h4 class="mb-3">Privacy-First Design</h4>
+                    <p class="text-muted mb-4">
+                        End-to-end encryption and HIPAA-compliant data handling ensure your
+                        mental health information remains completely private and secure.
+                    </p>
+                    <ul class="feature-list-modern">
+                        <li>End-to-end encryption</li>
+                        <li>HIPAA compliant</li>
+                        <li>Data ownership</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-card-modern modern-card p-4 h-100">
+                    <div class="feature-icon-modern mb-4">
+                        <i class="fas fa-sync-alt"></i>
+                    </div>
+                    <h4 class="mb-3">Real-Time Sync</h4>
+                    <p class="text-muted mb-4">
+                        Seamless synchronization across all your devices with instant updates
+                        and real-time notifications for important mental health insights.
+                    </p>
+                    <ul class="feature-list-modern">
+                        <li>Cross-device sync</li>
+                        <li>Real-time updates</li>
+                        <li>Offline support</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-card-modern modern-card p-4 h-100">
+                    <div class="feature-icon-modern mb-4">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h4 class="mb-3">Community Support</h4>
+                    <p class="text-muted mb-4">
+                        Connect with others on similar mental health journeys through moderated
+                        support groups and peer-to-peer encouragement.
+                    </p>
+                    <ul class="feature-list-modern">
+                        <li>Support groups</li>
+                        <li>Peer connections</li>
+                        <li>Moderated discussions</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-card-modern modern-card p-4 h-100">
+                    <div class="feature-icon-modern mb-4">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <h4 class="mb-3">Smart Reminders</h4>
+                    <p class="text-muted mb-4">
+                        Intelligent reminders for mood logging, medication, therapy sessions,
+                        and self-care activities based on your personal patterns.
+                    </p>
+                    <ul class="feature-list-modern">
+                        <li>Smart scheduling</li>
+                        <li>Personalized reminders</li>
+                        <li>Habit tracking</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-card-modern modern-card p-4 h-100">
+                    <div class="feature-icon-modern mb-4">
+                        <i class="fas fa-file-export"></i>
+                    </div>
+                    <h4 class="mb-3">Health Reports</h4>
+                    <p class="text-muted mb-4">
+                        Generate comprehensive mental health reports for yourself or to share
+                        with healthcare providers, complete with charts and insights.
+                    </p>
+                    <ul class="feature-list-modern">
+                        <li>PDF reports</li>
+                        <li>Trend analysis</li>
+                        <li>Professional format</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+                <div class="cta-card modern-card p-5">
+                    <h2 class="display-5 fw-bold mb-4">Ready to Transform Your Mental Wellness?</h2>
+                    <p class="lead mb-4">
+                        Join thousands of people who have taken control of their mental health
+                        with our comprehensive monitoring platform.
+                    </p>
+                    <div class="cta-actions">
+                        <a href="{% url 'register' %}" class="btn btn-primary-modern btn-lg me-3 px-5">
+                            <i class="fas fa-user-plus me-2"></i>
+                            Start Free Trial
+                        </a>
+                        <a href="{% url 'login' %}" class="btn btn-outline-primary btn-lg px-5">
+                            <i class="fas fa-sign-in-alt me-2"></i>
+                            Sign In
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+/* Hero Section */
+.hero-section {
+    position: relative;
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    color: #2c3e50;
+    overflow: hidden;
+}
+
+/* Hero Illustrations */
+.hero-illustrations {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.illustration-1 {
+    position: absolute;
+    top: 20%;
+    right: 10%;
+    animation: float-gentle 6s ease-in-out infinite;
+}
+
+.illustration-2 {
+    position: absolute;
+    top: 60%;
+    right: 25%;
+    animation: float-gentle 8s ease-in-out infinite reverse;
+}
+
+.illustration-3 {
+    position: absolute;
+    bottom: 20%;
+    right: 15%;
+    animation: float-gentle 10s ease-in-out infinite;
+}
+
+.floating-illustration {
+    width: 80px;
+    height: 80px;
+    opacity: 0.8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 50%;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.brain-icon {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.heart-icon {
+    background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+    color: white;
+}
+
+.meditation-icon {
+    background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
+    color: white;
+}
+
+@keyframes float-gentle {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-10px) rotate(5deg); }
+}
+
+/* Background Pattern Styles */
+.hero-bg-pattern {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.pattern-circle {
+    position: absolute;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(236, 72, 153, 0.1));
+    animation: float-gentle 8s ease-in-out infinite;
+}
+
+.circle-1 {
+    width: 300px;
+    height: 300px;
+    top: 10%;
+    left: -5%;
+    animation-delay: 0s;
+}
+
+.circle-2 {
+    width: 200px;
+    height: 200px;
+    top: 60%;
+    right: -3%;
+    animation-delay: 3s;
+}
+
+.circle-3 {
+    width: 150px;
+    height: 150px;
+    bottom: 20%;
+    left: 50%;
+    animation-delay: 6s;
+}
+
+.pattern-wave {
+    position: absolute;
+    background: linear-gradient(45deg, rgba(6, 182, 212, 0.1), rgba(16, 185, 129, 0.1));
+    border-radius: 50%;
+    animation: wave-pulse 10s ease-in-out infinite;
+}
+
+.wave-1 {
+    width: 400px;
+    height: 400px;
+    top: 30%;
+    right: 20%;
+    animation-delay: 2s;
+}
+
+.wave-2 {
+    width: 250px;
+    height: 250px;
+    bottom: 10%;
+    left: 20%;
+    animation-delay: 5s;
+}
+
+@keyframes wave-pulse {
+    0%, 100% {
+        transform: scale(1) rotate(0deg);
+        opacity: 0.1;
+    }
+    50% {
+        transform: scale(1.2) rotate(180deg);
+        opacity: 0.2;
+    }
+}
+
+.hero-badge .badge {
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.hero-stats .stat-item {
+    text-align: center;
+}
+
+.stat-number {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--accent);
+}
+
+.stat-label {
+    font-size: 0.9rem;
+    color: #666;
+    margin-top: 0.25rem;
+}
+
+/* Dashboard Preview */
+.dashboard-preview {
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+    overflow: hidden;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.preview-header {
+    background: #f8f9fa;
+    padding: 15px 20px;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.preview-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-dots span {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #dee2e6;
+    margin-right: 5px;
+}
+
+.nav-profile {
+    color: #6c757d;
+    font-size: 1.2rem;
+}
+
+.preview-content {
+    padding: 20px;
+}
+
+.preview-stats {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.stat-card {
+    flex: 1;
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.stat-icon {
+    color: var(--primary);
+    font-size: 1.5rem;
+}
+
+.stat-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary);
+}
+
+.stat-title {
+    font-size: 0.8rem;
+    color: #666;
+}
+
+.preview-chart {
+    height: 120px;
+}
+
+.chart-placeholder {
+    height: 100%;
+    position: relative;
+}
+
+.chart-line {
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--primary-gradient);
+    border-radius: 1px;
+}
+
+.chart-bars {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    display: flex;
+    align-items: end;
+    justify-content: space-around;
+    padding: 0 20px;
+}
+
+.bar {
+    width: 20px;
+    background: #e9ecef;
+    border-radius: 10px 10px 0 0;
+    transition: all 0.3s ease;
+}
+
+.bar.active {
+    background: var(--primary);
+    height: 80px;
+}
+
+.bar:nth-child(1) { height: 40px; }
+.bar:nth-child(3) { height: 60px; }
+.bar:nth-child(4) { height: 30px; }
+.bar:nth-child(5) { height: 50px; }
+
+/* Features */
+.feature-card {
+    transition: var(--transition);
+}
+
+.feature-card:hover {
+    transform: translateY(-10px);
+}
+
+.feature-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: var(--primary-gradient);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 2rem;
+    margin: 0 auto;
+}
+
+.feature-list {
+    list-style: none;
+    padding: 0;
+}
+
+.feature-list li {
+    padding: 0.25rem 0;
+    position: relative;
+    padding-left: 1.5rem;
+}
+
+.feature-list li::before {
+    content: '✓';
+    color: var(--primary);
+    font-weight: bold;
+    position: absolute;
+    left: 0;
+}
+
+/* Advanced Features */
+.advanced-features-section {
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    padding: 5rem 0;
+}
+
+.feature-card-modern {
+    background: white;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(102, 126, 234, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.feature-card-modern::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #667eea, #764ba2);
+}
+
+.feature-card-modern:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(102, 126, 234, 0.15);
+}
+
+.feature-icon-modern {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 2rem;
+    margin: 0 auto;
+    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+}
+
+.feature-list-modern {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.feature-list-modern li {
+    padding: 0.5rem 0;
+    position: relative;
+    padding-left: 1.5rem;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.feature-list-modern li::before {
+    content: '✓';
+    color: #667eea;
+    font-weight: bold;
+    position: absolute;
+    left: 0;
+    top: 0.5rem;
+}
+
+/* CTA Section */
+.cta-card {
+    background: white;
+    text-align: center;
+}
+
+.cta-actions {
+    margin-top: 2rem;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.feature-card, .testimonial-card {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+/* Button Visibility Fixes */
+.btn {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transition: all 0.3s ease !important;
+}
+
+.btn:hover {
+    opacity: 0.9 !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2) !important;
+}
+
+/* Enhanced Navigation */
+.navbar {
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    background: rgba(255, 255, 255, 0.95) !important;
+    border-bottom: 1px solid rgba(102, 126, 234, 0.1) !important;
+}
+
+.navbar-brand {
+    font-weight: 700 !important;
+    font-size: 1.8rem !important;
+}
+
+/* Enhanced Hero Section */
+.hero-actions .btn {
+    margin: 0 10px 10px 0 !important;
+    min-width: 180px !important;
+    font-weight: 600 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+}
+
+.hero-actions .btn-primary {
+    background: linear-gradient(45deg, #667eea, #764ba2) !important;
+    border: none !important;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4) !important;
+}
+
+.hero-actions .btn-outline-primary {
+    border: 2px solid #667eea !important;
+    color: #667eea !important;
+    background: transparent !important;
+}
+
+.hero-actions .btn-outline-primary:hover {
+    background: #667eea !important;
+    color: white !important;
+    border-color: #667eea !important;
+}
+
+/* Enhanced Features */
+.feature-card {
+    transition: all 0.3s ease !important;
+    border: 1px solid rgba(102, 126, 234, 0.1) !important;
+    background: white !important;
+}
+
+.feature-card:hover {
+    transform: translateY(-10px) !important;
+    box-shadow: 0 15px 35px rgba(102, 126, 234, 0.2) !important;
+    border-color: rgba(102, 126, 234, 0.3) !important;
+}
+
+.feature-icon {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3) !important;
+}
+
+/* Enhanced CTA Section */
+.cta-card {
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%) !important;
+    border: 2px solid rgba(102, 126, 234, 0.1) !important;
+}
+
+.cta-actions .btn {
+    margin: 0 10px 10px 0 !important;
+    min-width: 160px !important;
+    font-weight: 600 !important;
+}
+
+/* Enhanced Stats */
+.hero-stats .stat-item {
+    background: rgba(255, 255, 255, 0.9) !important;
+    padding: 20px !important;
+    border-radius: 15px !important;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1) !important;
+    backdrop-filter: blur(10px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+
+/* Enhanced Dashboard Preview */
+.dashboard-preview {
+    box-shadow: 0 20px 60px rgba(0,0,0,0.15) !important;
+    border: 2px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Enhanced Floating Illustrations */
+.floating-illustration {
+    animation: float-gentle 6s ease-in-out infinite !important;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2) !important;
+    border: 2px solid rgba(255, 255, 255, 0.3) !important;
+}
+
+/* Enhanced Advanced Features */
+.feature-card-modern {
+    background: white !important;
+    border: 1px solid rgba(102, 126, 234, 0.1) !important;
+    transition: all 0.3s ease !important;
+}
+
+.feature-card-modern:hover {
+    transform: translateY(-10px) !important;
+    box-shadow: 0 20px 40px rgba(102, 126, 234, 0.15) !important;
+    border-color: rgba(102, 126, 234, 0.3) !important;
+}
+
+.feature-icon-modern {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3) !important;
+}
+
+/* Enhanced Animations */
+@keyframes float-gentle {
+    0%, 100% {
+        transform: translateY(0px) rotate(0deg);
+        opacity: 0.8;
+    }
+    50% {
+        transform: translateY(-15px) rotate(5deg);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.feature-card, .testimonial-card {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+/* Enhanced Responsive Design */
+@media (max-width: 768px) {
+    .hero-section .display-3 {
+        font-size: 2.5rem;
+    }
+
+    .hero-actions .btn {
+        width: 100% !important;
+        margin: 0 0 10px 0 !important;
+        min-width: auto !important;
+    }
+
+    .preview-stats {
+        flex-direction: column;
+    }
+
+    .chart-bars {
+        padding: 0 10px;
+    }
+
+    .bar {
+        width: 15px;
+    }
+
+    .navbar-brand {
+        font-size: 1.5rem !important;
+    }
+
+    .hero-stats .stat-item {
+        margin-bottom: 15px !important;
+    }
+
+    .floating-illustration {
+        width: 60px !important;
+        height: 60px !important;
+    }
+
+    .floating-illustration i {
+        font-size: 1.5rem !important;
+    }
+}
+
+@media (max-width: 576px) {
+    .hero-section .display-1 {
+        font-size: 3rem !important;
+    }
+
+    .hero-content {
+        padding: 2rem 1rem !important;
+    }
+
+    .hero-actions .btn {
+        padding: 12px 20px !important;
+        font-size: 0.9rem !important;
+    }
+}
+
+/* Enhanced Focus States */
+.btn:focus,
+.form-control:focus,
+.form-select:focus {
+    box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25) !important;
+    border-color: #667eea !important;
+}
+
+/* Enhanced Loading States */
+.btn:active {
+    transform: translateY(0) !important;
+}
+
+/* Enhanced Scroll Behavior */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Enhanced Print Styles */
+@media print {
+    .navbar,
+    .hero-actions,
+    .cta-section {
+        display: none !important;
+    }
+}
+</style>
+{% endblock %}

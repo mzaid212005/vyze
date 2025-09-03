@@ -1,0 +1,863 @@
+{% extends 'accounts/base.html' %}
+
+{% block title %}Mental Wellness Games - Vyze{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <!-- Header -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="modern-card p-4" style="background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%); border: 2px solid #2196f3;">
+                <div class="d-flex align-items-center justify-content-between">
+                    <div>
+                        <h1 class="display-5 fw-bold gradient-text mb-2">
+                            <i class="fas fa-gamepad me-3"></i>
+                            Mental Wellness Games
+                        </h1>
+                        <p class="lead text-muted mb-0">Interactive games designed to boost your mental clarity, focus, and emotional wellbeing</p>
+                    </div>
+                    <div class="text-end">
+                        <div class="stats-card d-inline-block me-3">
+                            <div class="stats-icon">
+                                <i class="fas fa-trophy"></i>
+                            </div>
+                            <div class="mt-2">
+                                <h4 class="mb-0">AI Enhanced</h4>
+                                <small class="text-muted">Smart Games</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Game Categories -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="modern-card p-4">
+                <h3 class="mb-4">
+                    <i class="fas fa-th-large me-2 text-primary"></i>
+                    Choose Your Wellness Activity
+                </h3>
+                <div class="row g-4">
+                    <!-- Memory & Focus Games -->
+                    <div class="col-lg-4 col-md-6">
+                        <div class="game-category-card modern-card p-4 h-100" style="border-left: 4px solid #667eea;">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="game-icon me-3">
+                                    <i class="fas fa-brain fa-2x text-primary"></i>
+                                </div>
+                                <div>
+                                    <h5 class="mb-1">Memory & Focus</h5>
+                                    <small class="text-muted">Enhance cognitive function</small>
+                                </div>
+                            </div>
+                            <p class="text-muted small mb-3">Challenge your memory and improve concentration with our AI-powered games that adapt to your skill level.</p>
+                            <div class="game-options">
+                                <button class="btn btn-outline-primary btn-sm w-100 mb-2" onclick="startMemoryGame()">
+                                    <i class="fas fa-play me-1"></i>
+                                    Memory Match
+                                </button>
+                                <button class="btn btn-outline-primary btn-sm w-100 mb-2" onclick="startFocusGame()">
+                                    <i class="fas fa-play me-1"></i>
+                                    Focus Challenge
+                                </button>
+                                <button class="btn btn-outline-primary btn-sm w-100" onclick="startPositiveQuotes()">
+                                    <i class="fas fa-play me-1"></i>
+                                    Positive Quotes
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Relaxation & Breathing -->
+                    <div class="col-lg-4 col-md-6">
+                        <div class="game-category-card modern-card p-4 h-100" style="border-left: 4px solid #4ecdc4;">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="game-icon me-3">
+                                    <i class="fas fa-wind fa-2x text-info"></i>
+                                </div>
+                                <div>
+                                    <h5 class="mb-1">Relaxation & Breathing</h5>
+                                    <small class="text-muted">Reduce stress and anxiety</small>
+                                </div>
+                            </div>
+                            <p class="text-muted small mb-3">Guided breathing exercises and mindfulness activities to help you find peace and reduce stress levels.</p>
+                            <div class="game-options">
+                                <button class="btn btn-outline-info btn-sm w-100 mb-2" onclick="startBreathingExercise()">
+                                    <i class="fas fa-wind me-1"></i>
+                                    Breathing Exercise
+                                </button>
+                                <a href="{% url 'breathing_exercise' %}" class="btn btn-outline-info btn-sm w-100 mb-2">
+                                    <i class="fas fa-spa me-1"></i>
+                                    Guided Meditation
+                                </a>
+                                <button class="btn btn-outline-info btn-sm w-100" onclick="startPositiveQuotes()">
+                                    <i class="fas fa-leaf me-1"></i>
+                                    Relaxation Quotes
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Emotional Intelligence -->
+                    <div class="col-lg-4 col-md-6">
+                        <div class="game-category-card modern-card p-4 h-100" style="border-left: 4px solid #f093fb;">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="game-icon me-3">
+                                    <i class="fas fa-heart fa-2x text-danger"></i>
+                                </div>
+                                <div>
+                                    <h5 class="mb-1">Emotional Intelligence</h5>
+                                    <small class="text-muted">Build emotional awareness</small>
+                                </div>
+                            </div>
+                            <p class="text-muted small mb-3">Interactive scenarios and exercises to help you understand and manage your emotions more effectively.</p>
+                            <div class="game-options">
+                                <button class="btn btn-outline-danger btn-sm w-100 mb-2" onclick="startPositiveQuotes()">
+                                    <i class="fas fa-smile me-1"></i>
+                                    Daily Inspiration
+                                </button>
+                                <button class="btn btn-outline-danger btn-sm w-100 mb-2" onclick="startBreathingExercise()">
+                                    <i class="fas fa-users me-1"></i>
+                                    Mindful Breathing
+                                </button>
+                                <button class="btn btn-outline-danger btn-sm w-100" onclick="startFocusGame()">
+                                    <i class="fas fa-book-heart me-1"></i>
+                                    Focus Training
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Game Area -->
+    <div class="row">
+        <div class="col-12">
+            <div class="modern-card p-4">
+                <div id="game-area" class="text-center" style="min-height: 400px;">
+                    <div class="game-placeholder">
+                        <i class="fas fa-gamepad fa-4x text-muted mb-3"></i>
+                        <h4 class="text-muted">Choose a Game to Begin</h4>
+                        <p class="text-muted">Select from the categories above to start your mental wellness activity</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- AI Insights -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="modern-card p-4" style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);">
+                <h4 class="mb-3">
+                    <i class="fas fa-robot text-primary me-2"></i>
+                    AI Wellness Insights
+                </h4>
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <div class="ai-insight-card p-3 bg-white rounded">
+                            <i class="fas fa-brain text-primary fa-2x mb-2"></i>
+                            <h6>Memory Performance</h6>
+                            <p class="small text-muted mb-1">Your memory game scores show improvement over time</p>
+                            <div class="progress" style="height: 6px;">
+                                <div class="progress-bar bg-primary" style="width: 75%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="ai-insight-card p-3 bg-white rounded">
+                            <i class="fas fa-heart text-danger fa-2x mb-2"></i>
+                            <h6>Stress Management</h6>
+                            <p class="small text-muted mb-1">Regular breathing exercises are reducing your stress levels</p>
+                            <div class="progress" style="height: 6px;">
+                                <div class="progress-bar bg-danger" style="width: 60%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="ai-insight-card p-3 bg-white rounded">
+                            <i class="fas fa-chart-line text-success fa-2x mb-2"></i>
+                            <h6>Emotional Growth</h6>
+                            <p class="small text-muted mb-1">Your emotional intelligence is developing steadily</p>
+                            <div class="progress" style="height: 6px;">
+                                <div class="progress-bar bg-success" style="width: 85%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Simple working games - simplified for reliability
+let currentGame = null;
+
+// Utility function
+function showGameArea() {
+    const gameArea = document.getElementById('game-area');
+    gameArea.innerHTML = '';
+    return gameArea;
+}
+
+// Memory Game - Simplified and working
+function startMemoryGame() {
+    currentGame = 'memory';
+    const gameArea = showGameArea();
+
+    const emojis = ['🐶', '🐱', '🐭', '🐹', '🐰', '🦊'];
+    const cards = [...emojis, ...emojis];
+    let flippedCards = [];
+    let matchedCards = [];
+    let moves = 0;
+
+    // Shuffle cards
+    for (let i = cards.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [cards[i], cards[j]] = [cards[j], cards[i]];
+    }
+
+    gameArea.innerHTML = `
+        <div class="memory-game-container text-center">
+            <h3 class="text-primary mb-3">
+                <i class="fas fa-brain me-2"></i>
+                Memory Match Game
+            </h3>
+            <div class="mb-3">
+                <span class="badge bg-info">Moves: <span id="moves">0</span></span>
+                <span class="badge bg-success">Matches: <span id="matches">0</span>/6</span>
+            </div>
+            <div class="memory-grid mb-4">
+                ${cards.map((emoji, index) =>
+                    `<div class="memory-card" data-index="${index}" onclick="flipCard(${index}, '${emoji}')">
+                        <div class="card-content">
+                            <div class="card-front">?</div>
+                            <div class="card-back">${emoji}</div>
+                        </div>
+                    </div>`
+                ).join('')}
+            </div>
+            <button class="btn btn-secondary" onclick="startMemoryGame()">
+                <i class="fas fa-redo me-1"></i>
+                Reset Game
+            </button>
+        </div>
+    `;
+
+    // Make flipCard function global
+    window.flipCard = function(index, emoji) {
+        const card = document.querySelector(`[data-index="${index}"]`);
+        if (card.classList.contains('flipped') || card.classList.contains('matched')) return;
+
+        card.classList.add('flipped');
+        flippedCards.push({index, emoji});
+
+        if (flippedCards.length === 2) {
+            moves++;
+            document.getElementById('moves').textContent = moves;
+
+            setTimeout(() => {
+                if (flippedCards[0].emoji === flippedCards[1].emoji) {
+                    // Match found
+                    flippedCards.forEach(card => {
+                        document.querySelector(`[data-index="${card.index}"]`).classList.add('matched');
+                    });
+                    matchedCards.push(...flippedCards);
+                    document.getElementById('matches').textContent = matchedCards.length / 2;
+
+                    if (matchedCards.length === cards.length) {
+                        setTimeout(() => {
+                            gameArea.innerHTML = `
+                                <div class="text-center">
+                                    <i class="fas fa-trophy fa-4x text-warning mb-3"></i>
+                                    <h3 class="text-success">Congratulations!</h3>
+                                    <p>You completed the game in ${moves} moves!</p>
+                                    <button class="btn btn-primary" onclick="startMemoryGame()">Play Again</button>
+                                </div>
+                            `;
+                        }, 500);
+                    }
+                } else {
+                    // No match
+                    flippedCards.forEach(card => {
+                        document.querySelector(`[data-index="${card.index}"]`).classList.remove('flipped');
+                    });
+                }
+                flippedCards = [];
+            }, 1000);
+        }
+    };
+}
+
+// Breathing Exercise - Working
+function startBreathingExercise() {
+    currentGame = 'breathing';
+    const gameArea = showGameArea();
+
+    gameArea.innerHTML = `
+        <div class="breathing-exercise text-center">
+            <h3 class="text-info mb-4">
+                <i class="fas fa-wind me-2"></i>
+                Breathing Exercise
+            </h3>
+            <div class="breathing-circle mb-4">
+                <div class="circle-content">
+                    <div id="instruction">Breathe In</div>
+                    <div class="timer">4</div>
+                </div>
+            </div>
+            <div class="breathing-guide">
+                <p class="text-muted">Follow the circle and instructions</p>
+            </div>
+            <button class="btn btn-info btn-lg mt-3" id="start-breathing">
+                <i class="fas fa-play me-2"></i>
+                Start Breathing
+            </button>
+        </div>
+    `;
+
+    document.getElementById('start-breathing').onclick = function() {
+        const instructions = ['Breathe In', 'Hold', 'Breathe Out', 'Hold'];
+        const durations = [4, 4, 4, 4];
+        let step = 0;
+        let timeLeft = durations[0];
+
+        const timer = setInterval(() => {
+            document.getElementById('instruction').textContent = instructions[step];
+            document.querySelector('.timer').textContent = timeLeft;
+
+            // Animate circle
+            const circle = document.querySelector('.breathing-circle');
+            if (step === 0) circle.classList.add('expand');
+            else if (step === 2) circle.classList.remove('expand');
+
+            timeLeft--;
+
+            if (timeLeft < 0) {
+                step = (step + 1) % instructions.length;
+                timeLeft = durations[step];
+            }
+        }, 1000);
+
+        // Stop after 4 cycles (about 1 minute)
+        setTimeout(() => {
+            clearInterval(timer);
+            gameArea.innerHTML = `
+                <div class="text-center">
+                    <i class="fas fa-check-circle fa-4x text-success mb-3"></i>
+                    <h3 class="text-success">Great job!</h3>
+                    <p>You completed your breathing exercise.</p>
+                    <button class="btn btn-info" onclick="startBreathingExercise()">Do Another</button>
+                </div>
+            `;
+        }, 64000);
+    };
+}
+
+// Positive Quotes - Working
+function startPositiveQuotes() {
+    currentGame = 'quotes';
+    const gameArea = showGameArea();
+
+    const quotes = [
+        "You are stronger than you think.",
+        "Every day is a new beginning.",
+        "Your mental health matters.",
+        "Small steps lead to big changes.",
+        "You are not alone in this journey.",
+        "Be kind to yourself today.",
+        "Your feelings are valid.",
+        "Progress, not perfection.",
+        "You deserve peace and happiness.",
+        "One day at a time."
+    ];
+
+    const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+
+    gameArea.innerHTML = `
+        <div class="positive-quotes text-center">
+            <h3 class="text-warning mb-4">
+                <i class="fas fa-quote-left me-2"></i>
+                Daily Inspiration
+            </h3>
+            <div class="quote-card mb-4">
+                <blockquote class="blockquote">
+                    <p class="mb-0 display-6">"${randomQuote}"</p>
+                </blockquote>
+            </div>
+            <button class="btn btn-warning btn-lg" onclick="startPositiveQuotes()">
+                <i class="fas fa-sync-alt me-2"></i>
+                Get New Quote
+            </button>
+        </div>
+    `;
+}
+
+// Simple Focus Game
+function startFocusGame() {
+    currentGame = 'focus';
+    const gameArea = showGameArea();
+
+    gameArea.innerHTML = `
+        <div class="focus-game text-center">
+            <h3 class="text-success mb-4">
+                <i class="fas fa-eye me-2"></i>
+                Focus Challenge
+            </h3>
+            <div class="focus-area mb-4" id="focus-area">
+                <p class="text-muted">Click "Start" to begin the focus challenge</p>
+            </div>
+            <button class="btn btn-success btn-lg" id="start-focus">
+                <i class="fas fa-play me-2"></i>
+                Start Challenge
+            </button>
+        </div>
+    `;
+
+    document.getElementById('start-focus').onclick = function() {
+        let score = 0;
+        let timeLeft = 30;
+        const focusArea = document.getElementById('focus-area');
+
+        focusArea.innerHTML = `
+            <div class="target" id="target" style="width: 50px; height: 50px; background: red; border-radius: 50%; position: absolute; cursor: pointer;"></div>
+            <div class="score">Score: <span id="score">0</span></div>
+            <div class="time">Time: <span id="time">30</span>s</div>
+        `;
+
+        function moveTarget() {
+            const target = document.getElementById('target');
+            const maxX = focusArea.clientWidth - 50;
+            const maxY = focusArea.clientHeight - 50;
+            target.style.left = Math.random() * maxX + 'px';
+            target.style.top = Math.random() * maxY + 'px';
+        }
+
+        moveTarget();
+
+        document.getElementById('target').onclick = function() {
+            score++;
+            document.getElementById('score').textContent = score;
+            moveTarget();
+        };
+
+        const gameTimer = setInterval(() => {
+            timeLeft--;
+            document.getElementById('time').textContent = timeLeft;
+
+            if (timeLeft <= 0) {
+                clearInterval(gameTimer);
+                focusArea.innerHTML = `
+                    <div class="text-center">
+                        <i class="fas fa-trophy fa-3x text-warning mb-3"></i>
+                        <h4>Challenge Complete!</h4>
+                        <p>Your final score: ${score}</p>
+                        <button class="btn btn-success" onclick="startFocusGame()">Try Again</button>
+                    </div>
+                `;
+            }
+        }, 1000);
+    };
+}
+
+// Initialize games when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    // Add click handlers to game buttons
+    document.querySelectorAll('.game-category-card button').forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+    });
+});
+</script>
+
+<style>
+.memory-board {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.memory-card {
+    width: 80px;
+    height: 80px;
+    perspective: 1000px;
+    cursor: pointer;
+}
+
+.card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+}
+
+.memory-card.flipped .card-inner {
+    transform: rotateY(180deg);
+}
+
+.card-front, .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+}
+
+.card-front {
+    background: linear-gradient(45deg, #667eea, #764ba2);
+}
+
+.card-back {
+    background: white;
+    border: 2px solid #667eea;
+    transform: rotateY(180deg);
+}
+
+.memory-card.matched {
+    opacity: 0.7;
+    pointer-events: none;
+}
+
+.pattern-board {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+.pattern-circle {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 3px solid #ddd;
+}
+
+.pattern-circle:hover {
+    transform: scale(1.1);
+}
+
+.focus-board {
+    min-height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background: #f8f9fa;
+    border-radius: 15px;
+}
+
+.emotion-board {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.emotion-face {
+    font-size: 5rem;
+    margin-bottom: 20px;
+}
+
+.emotion-options {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.emotion-btn {
+    padding: 10px;
+    font-size: 0.9rem;
+}
+
+.game-stats {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-label {
+    display: block;
+    font-size: 0.8rem;
+    color: #666;
+    margin-bottom: 5px;
+}
+
+.stat-value {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+}
+
+.game-complete {
+    padding: 50px 20px;
+}
+
+.achievement-badge {
+    background: linear-gradient(45deg, #ffd700, #ffed4e);
+    padding: 20px;
+    border-radius: 15px;
+    margin: 20px 0;
+    border: 3px solid #fff;
+    box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
+}
+
+.ai-insight-card {
+    transition: all 0.3s ease;
+    border: 1px solid #dee2e6;
+}
+
+.ai-insight-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.game-category-card {
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.game-category-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+
+.game-icon {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.game-options {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+}
+
+.game-category-card:hover .game-options {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.btn:hover {
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+/* Game Styles */
+.memory-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+.memory-card {
+    aspect-ratio: 1;
+    background: #667eea;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 2rem;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.memory-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+}
+
+.memory-card.flipped {
+    background: #764ba2;
+    transform: rotateY(180deg);
+}
+
+.memory-card.matched {
+    background: #28a745;
+    opacity: 0.8;
+    cursor: default;
+}
+
+.card-content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.card-front, .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    backface-visibility: hidden;
+}
+
+.card-front {
+    background: linear-gradient(45deg, #667eea, #764ba2);
+    color: white;
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+.card-back {
+    background: white;
+    border: 2px solid #667eea;
+    transform: rotateY(180deg);
+    font-size: 2rem;
+}
+
+/* Breathing Exercise Styles */
+.breathing-circle {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: linear-gradient(45deg, #4ecdc4, #44a08d);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    transition: all 4s ease-in-out;
+    position: relative;
+    overflow: hidden;
+}
+
+.breathing-circle::before {
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.circle-content {
+    z-index: 2;
+    text-align: center;
+    color: white;
+}
+
+.circle-content .timer {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.breathing-circle.expand {
+    transform: scale(1.5);
+}
+
+/* Focus Game Styles */
+.focus-area {
+    width: 100%;
+    height: 300px;
+    background: linear-gradient(45deg, #f8f9fa, #e9ecef);
+    border-radius: 15px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px dashed #dee2e6;
+}
+
+.target {
+    position: absolute;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+}
+
+.target:hover {
+    transform: scale(1.1);
+}
+
+/* Positive Quotes Styles */
+.quote-card {
+    background: linear-gradient(135deg, #ffeaa7, #fab1a0);
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(255, 170, 167, 0.3);
+    border: none;
+}
+
+.quote-card blockquote {
+    font-size: 1.5rem;
+    font-style: italic;
+    color: #2d3436;
+    margin-bottom: 0;
+}
+
+/* Game Stats */
+.game-stats {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .memory-grid {
+        grid-template-columns: repeat(3, 1fr);
+        max-width: 250px;
+    }
+
+    .breathing-circle {
+        width: 150px;
+        height: 150px;
+    }
+
+    .focus-area {
+        height: 250px;
+    }
+
+    .quote-card {
+        padding: 1.5rem;
+    }
+
+    .quote-card blockquote {
+        font-size: 1.2rem;
+    }
+}
+</style>
+{% endblock %}

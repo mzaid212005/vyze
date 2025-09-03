@@ -1,0 +1,382 @@
+{% extends 'accounts/base.html' %}
+
+{% block title %}Patient Analytics - Vyze{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <!-- Patient Header -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="modern-card p-4">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h1 class="display-5 fw-bold gradient-text mb-2">
+                            <i class="fas fa-user-md me-3"></i>
+                            Patient Analytics: {{ patient.username }}
+                        </h1>
+                        <p class="lead text-muted mb-0">Comprehensive view of {{ patient.username }}'s mental wellness journey</p>
+                    </div>
+                    <div class="text-end">
+                        <div class="stats-card d-inline-block me-3">
+                            <div class="stats-icon">
+                                <i class="fas fa-brain"></i>
+                            </div>
+                            <div class="mt-2">
+                                <h4 class="mb-0">{{ patient_stats.total_moods }}</h4>
+                                <small class="text-muted">Mood Entries</small>
+                            </div>
+                        </div>
+                        <div class="stats-card d-inline-block">
+                            <div class="stats-icon">
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <div class="mt-2">
+                                <h4 class="mb-0">{{ patient_stats.avg_mood }}</h4>
+                                <small class="text-muted">Avg Mood</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Analytics Overview -->
+    <div class="row mb-4">
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="stats-card">
+                <div class="stats-icon">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <div class="mt-3">
+                    <h4 class="mb-1">{{ patient_stats.total_moods }}</h4>
+                    <p class="text-muted mb-0">Total Mood Entries</p>
+                    <div class="progress mt-2">
+                        <div class="progress-bar" style="width: 100%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="stats-card">
+                <div class="stats-icon">
+                    <i class="fas fa-book-open"></i>
+                </div>
+                <div class="mt-3">
+                    <h4 class="mb-1">{{ patient_stats.total_journals }}</h4>
+                    <p class="text-muted mb-0">Journal Entries</p>
+                    <div class="progress mt-2">
+                        <div class="progress-bar bg-success" style="width: 100%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="stats-card">
+                <div class="stats-icon">
+                    <i class="fas fa-calendar-day"></i>
+                </div>
+                <div class="mt-3">
+                    <h4 class="mb-1">{{ patient_stats.current_streak }}</h4>
+                    <p class="text-muted mb-0">Day Streak</p>
+                    <div class="progress mt-2">
+                        <div class="progress-bar bg-info" style="width: 100%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="stats-card">
+                <div class="stats-icon">
+                    <i class="fas fa-chart-pie"></i>
+                </div>
+                <div class="mt-3">
+                    <h4 class="mb-1">{{ patient_stats.avg_mood }}/10</h4>
+                    <p class="text-muted mb-0">Average Mood</p>
+                    <div class="progress mt-2">
+                        <div class="progress-bar bg-warning" style="width: {{ patient_stats.avg_mood_percentage }}%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="row mb-4">
+        <div class="col-lg-8 mb-4">
+            <div class="modern-card p-4">
+                <h3 class="mb-4">
+                    <i class="fas fa-chart-area text-primary me-2"></i>
+                    Mood Trend (Last 30 Days)
+                </h3>
+                <div class="chart-container">
+                    <canvas id="patientMoodTrendChart" height="300"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4 mb-4">
+            <div class="modern-card p-4">
+                <h4 class="mb-4">
+                    <i class="fas fa-chart-pie text-success me-2"></i>
+                    Mood Distribution
+                </h4>
+                <div class="chart-container">
+                    <canvas id="patientMoodDistributionChart" height="250"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Patient Details -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="modern-card p-4">
+                <h3 class="mb-4">
+                    <i class="fas fa-user text-info me-2"></i>
+                    Patient Information
+                </h3>
+                <div class="row">
+                    <div class="col-md-6">
+                        <p><strong>Email:</strong> {{ patient.email }}</p>
+                        <p><strong>Joined:</strong> {{ patient.date_joined|date:"M d, Y" }}</p>
+                        {% if patient.date_of_birth %}
+                        <p><strong>Date of Birth:</strong> {{ patient.date_of_birth|date:"M d, Y" }}</p>
+                        {% endif %}
+                        {% if patient.phone_number %}
+                        <p><strong>Phone:</strong> {{ patient.phone_number }}</p>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <strong>Achievements:</strong>
+                            {% with achievements=patient.achievement_set.all %}
+                            {% if achievements %}
+                                {% for achievement in achievements %}
+                                <span class="badge bg-warning me-1 mb-1">{{ achievement.title }}</span>
+                                {% endfor %}
+                            {% else %}
+                                <span class="text-muted">No achievements yet</span>
+                            {% endif %}
+                            {% endwith %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="card mb-4">
+                    <div class="card-header bg-info text-white">
+                        <h5 class="mb-0">
+                            <i class="fas fa-chart-line me-2"></i>
+                            Mood History
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        {% if mood_entries %}
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Mood</th>
+                                        <th>Note</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for entry in mood_entries %}
+                                    <tr>
+                                        <td>{{ entry.date|date:"M d, Y H:i" }}</td>
+                                        <td>
+                                            <span class="badge bg-{% if entry.mood <= 3 %}danger{% elif entry.mood <= 7 %}warning{% else %}success{% endif %}">
+                                                {{ entry.mood }}/10
+                                            </span>
+                                        </td>
+                                        <td>{{ entry.note|truncatechars:100|default:"-" }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        {% else %}
+                        <p class="text-muted">No mood entries yet.</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header bg-success text-white">
+                        <h5 class="mb-0">
+                            <i class="fas fa-book me-2"></i>
+                            Journal Entries
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        {% if journals %}
+                        {% for journal in journals %}
+                        <div class="mb-3 p-3 border rounded">
+                            <h6>{{ journal.title }}</h6>
+                            <small class="text-muted">{{ journal.date|date:"M d, Y" }}</small>
+                            <p>{{ journal.content|truncatechars:200 }}</p>
+                        </div>
+                        {% endfor %}
+                        {% else %}
+                        <p class="text-muted">No journal entries yet.</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="card mb-4">
+                    <div class="card-header bg-warning text-dark">
+                        <h5 class="mb-0">
+                            <i class="fas fa-sticky-note me-2"></i>
+                            Add Doctor Note
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <form method="post" action="{% url 'add_doctor_note' patient.id %}">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <label for="note" class="form-label">Note</label>
+                                <textarea class="form-control" id="note" name="note" rows="4" placeholder="Add your observations or suggestions..." required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-warning w-100">
+                                <i class="fas fa-plus me-2"></i>
+                                Add Note
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header bg-secondary text-white">
+                        <h5 class="mb-0">
+                            <i class="fas fa-comments me-2"></i>
+                            Previous Notes
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        {% with notes=patient.patient_notes.all %}
+                        {% if notes %}
+                        {% for note in notes %}
+                        <div class="mb-3 p-2 border-start border-primary border-4">
+                            <small class="text-muted">{{ note.date|date:"M d, Y H:i" }}</small>
+                            <p class="mb-1">{{ note.note }}</p>
+                            <small class="text-primary">by {{ note.doctor.username }}</small>
+                        </div>
+                        {% endfor %}
+                        {% else %}
+                        <p class="text-muted">No notes yet.</p>
+                        {% endif %}
+                        {% endwith %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Patient Mood Trend Chart
+    const patientMoodTrendData = {{ mood_trend|safe }};
+    const patientMoodTrendCtx = document.getElementById('patientMoodTrendChart');
+
+    if (patientMoodTrendCtx && patientMoodTrendData.length > 0) {
+        new Chart(patientMoodTrendCtx, {
+            type: 'line',
+            data: {
+                labels: patientMoodTrendData.map(item => new Date(item.date__date).toLocaleDateString()),
+                datasets: [{
+                    label: 'Average Mood',
+                    data: patientMoodTrendData.map(item => item.avg_mood || 0),
+                    borderColor: '#667eea',
+                    backgroundColor: 'rgba(102, 126, 234, 0.1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: '#667eea',
+                    pointBorderColor: '#fff',
+                    pointBorderWidth: 2,
+                    pointRadius: 6,
+                    pointHoverRadius: 8
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 10,
+                        grid: { color: 'rgba(0,0,0,0.05)' }
+                    },
+                    x: {
+                        grid: { color: 'rgba(0,0,0,0.05)' }
+                    }
+                },
+                animation: {
+                    duration: 2000,
+                    easing: 'easeInOutQuart'
+                }
+            }
+        });
+    }
+
+    // Patient Mood Distribution Chart
+    const patientMoodDistributionData = {{ mood_distribution|safe }};
+    const patientMoodDistributionCtx = document.getElementById('patientMoodDistributionChart');
+
+    if (patientMoodDistributionCtx && patientMoodDistributionData.length > 0) {
+        new Chart(patientMoodDistributionCtx, {
+            type: 'doughnut',
+            data: {
+                labels: patientMoodDistributionData.map(item => `Mood ${item.mood}`),
+                datasets: [{
+                    data: patientMoodDistributionData.map(item => item.count),
+                    backgroundColor: [
+                        '#dc3545', '#fd7e14', '#ffc107', '#20c997', '#0dcaf0', '#6f42c1',
+                        '#e83e8c', '#6c757d', '#198754', '#0d6efd'
+                    ],
+                    borderWidth: 0,
+                    hoverOffset: 10
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            padding: 15,
+                            usePointStyle: true,
+                            font: { size: 12 }
+                        }
+                    }
+                },
+                animation: {
+                    animateScale: true,
+                    animateRotate: true,
+                    duration: 1500
+                }
+            }
+        });
+    }
+});
+</script>
+{% endblock %}

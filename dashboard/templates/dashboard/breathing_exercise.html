@@ -1,0 +1,154 @@
+{% extends 'accounts/base.html' %}
+
+{% block title %}Breathing Exercise - Vyze{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+        <div class="card">
+            <div class="card-header bg-info text-white">
+                <h4 class="mb-0">
+                    <i class="fas fa-wind me-2"></i>
+                    Guided Breathing Exercise
+                </h4>
+            </div>
+            <div class="card-body text-center">
+                <div id="breathing-circle" class="breathing-circle mx-auto mb-4">
+                    <div class="inner-circle">
+                        <span id="instruction">Breathe In</span>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <h5 id="phase">Get Ready</h5>
+                    <p id="description">Find a comfortable position and prepare to breathe deeply.</p>
+                </div>
+
+                <div class="mb-4">
+                    <button id="start-btn" class="btn btn-primary btn-lg">Start Exercise</button>
+                    <button id="stop-btn" class="btn btn-secondary btn-lg" style="display: none;">Stop</button>
+                </div>
+
+                <div class="progress mb-3">
+                    <div id="progress-bar" class="progress-bar" role="progressbar" style="width: 0%"></div>
+                </div>
+
+                <p class="text-muted">This 2-minute exercise will guide you through deep breathing to help reduce stress and anxiety.</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<style>
+.breathing-circle {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: linear-gradient(45deg, #667eea, #764ba2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: none;
+    transition: all 4s ease-in-out;
+}
+
+.inner-circle {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #667eea;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.breathe-in {
+    transform: scale(1.5);
+}
+
+.breathe-out {
+    transform: scale(0.7);
+}
+</style>
+
+<script>
+let breathingInterval;
+let currentPhase = 0;
+let totalPhases = 8; // 4 cycles of breathe in/out
+let isRunning = false;
+
+const phases = [
+    { instruction: 'Get Ready', description: 'Find a comfortable position and prepare to breathe deeply.', duration: 3000 },
+    { instruction: 'Breathe In', description: 'Slowly inhale through your nose for 4 seconds.', duration: 4000, action: 'breathe-in' },
+    { instruction: 'Hold', description: 'Hold your breath for 4 seconds.', duration: 4000 },
+    { instruction: 'Breathe Out', description: 'Slowly exhale through your mouth for 4 seconds.', duration: 4000, action: 'breathe-out' },
+    { instruction: 'Hold', description: 'Hold your breath for 4 seconds.', duration: 4000 },
+    { instruction: 'Breathe In', description: 'Slowly inhale through your nose for 4 seconds.', duration: 4000, action: 'breathe-in' },
+    { instruction: 'Hold', description: 'Hold your breath for 4 seconds.', duration: 4000 },
+    { instruction: 'Breathe Out', description: 'Slowly exhale through your mouth for 4 seconds.', duration: 4000, action: 'breathe-out' },
+    { instruction: 'Complete', description: 'Great job! Take a moment to notice how you feel.', duration: 5000 }
+];
+
+document.getElementById('start-btn').addEventListener('click', startExercise);
+document.getElementById('stop-btn').addEventListener('click', stopExercise);
+
+function startExercise() {
+    if (isRunning) return;
+
+    isRunning = true;
+    currentPhase = 0;
+    document.getElementById('start-btn').style.display = 'none';
+    document.getElementById('stop-btn').style.display = 'inline-block';
+
+    runPhase();
+}
+
+function stopExercise() {
+    isRunning = false;
+    clearInterval(breathingInterval);
+    resetUI();
+}
+
+function runPhase() {
+    if (!isRunning || currentPhase >= phases.length) {
+        stopExercise();
+        return;
+    }
+
+    const phase = phases[currentPhase];
+    document.getElementById('instruction').textContent = phase.instruction;
+    document.getElementById('phase').textContent = phase.instruction;
+    document.getElementById('description').textContent = phase.description;
+
+    const circle = document.getElementById('breathing-circle');
+    circle.className = 'breathing-circle mx-auto mb-4';
+
+    if (phase.action) {
+        circle.classList.add(phase.action);
+    }
+
+    const progress = ((currentPhase + 1) / phases.length) * 100;
+    document.getElementById('progress-bar').style.width = progress + '%';
+
+    setTimeout(() => {
+        currentPhase++;
+        runPhase();
+    }, phase.duration);
+}
+
+function resetUI() {
+    document.getElementById('start-btn').style.display = 'inline-block';
+    document.getElementById('stop-btn').style.display = 'none';
+    document.getElementById('instruction').textContent = 'Breathe In';
+    document.getElementById('phase').textContent = 'Get Ready';
+    document.getElementById('description').textContent = 'Find a comfortable position and prepare to breathe deeply.';
+    document.getElementById('breathing-circle').className = 'breathing-circle mx-auto mb-4';
+    document.getElementById('progress-bar').style.width = '0%';
+}
+</script>
+{% endblock %}
