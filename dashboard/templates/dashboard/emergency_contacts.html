@@ -1,0 +1,267 @@
+{% extends 'accounts/base.html' %}
+
+{% block title %}Emergency Contacts - Vyze{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <!-- Header -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="modern-card p-4" style="background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); border: 2px solid #2196f3;">
+                <div class="d-flex align-items-center">
+                    <div class="me-4">
+                        <i class="fas fa-user-md fa-3x text-primary"></i>
+                    </div>
+                    <div>
+                        <h2 class="mb-2 text-primary">Emergency Contacts</h2>
+                        <p class="mb-0 text-dark">Quick access to your healthcare providers and support network when you need immediate assistance.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Assigned Doctors -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="modern-card p-4">
+                <h3 class="mb-4">
+                    <i class="fas fa-user-md text-primary me-2"></i>
+                    Your Assigned Healthcare Providers
+                </h3>
+
+                {% if assigned_doctors %}
+                <div class="row g-4">
+                    {% for doctor in assigned_doctors %}
+                    <div class="col-lg-6 col-md-6">
+                        <div class="doctor-card modern-card p-4 h-100">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="doctor-avatar me-3">
+                                    <i class="fas fa-user-md fa-2x text-white"></i>
+                                </div>
+                                <div>
+                                    <h5 class="mb-1">{{ doctor.get_full_name|default:doctor.username }}</h5>
+                                    <p class="mb-0 text-muted">Mental Health Professional</p>
+                                </div>
+                            </div>
+
+                            <div class="contact-info mb-3">
+                                {% if doctor.email %}
+                                <div class="contact-item mb-2">
+                                    <i class="fas fa-envelope text-primary me-2"></i>
+                                    <span>{{ doctor.email }}</span>
+                                </div>
+                                {% endif %}
+
+                                {% if doctor.phone_number %}
+                                <div class="contact-item mb-2">
+                                    <i class="fas fa-phone text-primary me-2"></i>
+                                    <span>{{ doctor.phone_number }}</span>
+                                </div>
+                                {% endif %}
+                            </div>
+
+                            <div class="d-flex gap-2">
+                                {% if doctor.email %}
+                                <a href="mailto:{{ doctor.email }}" class="btn btn-outline-primary flex-fill">
+                                    <i class="fas fa-envelope me-1"></i>
+                                    Email
+                                </a>
+                                {% endif %}
+
+                                {% if doctor.phone_number %}
+                                <a href="tel:{{ doctor.phone_number }}" class="btn btn-primary flex-fill">
+                                    <i class="fas fa-phone me-1"></i>
+                                    Call
+                                </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="text-center py-5">
+                    <i class="fas fa-user-md fa-4x text-muted mb-3"></i>
+                    <h5 class="text-muted">No Healthcare Providers Assigned</h5>
+                    <p class="text-muted mb-4">You haven't been assigned to any healthcare providers yet. Contact your clinic or healthcare organization to get connected with a mental health professional.</p>
+                    <a href="{% url 'patient_dashboard' %}" class="btn btn-primary">
+                        <i class="fas fa-arrow-left me-2"></i>
+                        Back to Dashboard
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Emergency Resources -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="modern-card p-4">
+                <h3 class="mb-4">
+                    <i class="fas fa-ambulance text-danger me-2"></i>
+                    Emergency Resources
+                </h3>
+                <div class="row g-4">
+                    <div class="col-lg-4 col-md-6">
+                        <div class="emergency-resource-card modern-card p-4 h-100" style="border-left: 4px solid #dc3545;">
+                            <div class="d-flex align-items-center mb-3">
+                                <i class="fas fa-phone fa-2x text-danger me-3"></i>
+                                <div>
+                                    <h5 class="mb-1">Emergency Services</h5>
+                                    <h4 class="mb-0 text-danger">911</h4>
+                                </div>
+                            </div>
+                            <p class="text-muted mb-3">For immediate medical emergencies and life-threatening situations.</p>
+                            <a href="tel:911" class="btn btn-danger w-100">
+                                <i class="fas fa-phone me-2"></i>
+                                Call 911
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6">
+                        <div class="emergency-resource-card modern-card p-4 h-100" style="border-left: 4px solid #28a745;">
+                            <div class="d-flex align-items-center mb-3">
+                                <i class="fas fa-comments fa-2x text-success me-3"></i>
+                                <div>
+                                    <h5 class="mb-1">Crisis Text Line</h5>
+                                    <p class="mb-0 text-success">Text HOME to 741741</p>
+                                </div>
+                            </div>
+                            <p class="text-muted mb-3">Free, 24/7 crisis counseling via text message.</p>
+                            <button class="btn btn-success w-100" onclick="copyToClipboard('741741')">
+                                <i class="fas fa-copy me-2"></i>
+                                Copy Number
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6">
+                        <div class="emergency-resource-card modern-card p-4 h-100" style="border-left: 4px solid #6f42c1;">
+                            <div class="d-flex align-items-center mb-3">
+                                <i class="fas fa-brain fa-2x text-primary me-3"></i>
+                                <div>
+                                    <h5 class="mb-1">Suicide Prevention</h5>
+                                    <h4 class="mb-0 text-primary">988</h4>
+                                </div>
+                            </div>
+                            <p class="text-muted mb-3">24/7 suicide prevention and mental health crisis hotline.</p>
+                            <a href="tel:988" class="btn btn-primary w-100">
+                                <i class="fas fa-phone me-2"></i>
+                                Call 988
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="row">
+        <div class="col-12">
+            <div class="modern-card p-4">
+                <h3 class="mb-4">
+                    <i class="fas fa-bolt text-warning me-2"></i>
+                    Quick Actions
+                </h3>
+                <div class="row g-3">
+                    <div class="col-lg-3 col-md-6">
+                        <a href="{% url 'crisis_support' %}" class="btn btn-outline-danger w-100 p-3">
+                            <i class="fas fa-exclamation-triangle fa-2x mb-2"></i>
+                            <br>
+                            Crisis Support
+                        </a>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <a href="{% url 'breathing_exercise' %}" class="btn btn-outline-info w-100 p-3">
+                            <i class="fas fa-wind fa-2x mb-2"></i>
+                            <br>
+                            Breathing Exercise
+                        </a>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <a href="{% url 'positive_quotes' %}" class="btn btn-outline-success w-100 p-3">
+                            <i class="fas fa-quote-left fa-2x mb-2"></i>
+                            <br>
+                            Positive Quotes
+                        </a>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <a href="{% url 'patient_dashboard' %}" class="btn btn-outline-primary w-100 p-3">
+                            <i class="fas fa-home fa-2x mb-2"></i>
+                            <br>
+                            Back to Dashboard
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function copyToClipboard(text) {
+    navigator.clipboard.writeText(text).then(function() {
+        // Show success message
+        const button = event.target;
+        const originalText = button.innerHTML;
+        button.innerHTML = '<i class="fas fa-check me-2"></i>Copied!';
+        button.classList.remove('btn-success');
+        button.classList.add('btn-success');
+
+        setTimeout(() => {
+            button.innerHTML = '<i class="fas fa-copy me-2"></i>Copy Number';
+        }, 2000);
+    });
+}
+</script>
+
+<style>
+.doctor-card {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border: 2px solid #dee2e6;
+    transition: all 0.3s ease;
+}
+
+.doctor-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+.doctor-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    font-size: 0.9rem;
+}
+
+.emergency-resource-card {
+    background: linear-gradient(135deg, #fff5f5 0%, #fed7d7 100%);
+    transition: all 0.3s ease;
+}
+
+.emergency-resource-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(220, 53, 69, 0.2);
+}
+
+.btn-outline-danger:hover, .btn-outline-info:hover, .btn-outline-success:hover, .btn-outline-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+</style>
+{% endblock %}

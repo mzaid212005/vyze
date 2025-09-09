@@ -1,0 +1,276 @@
+{% extends 'accounts/base.html' %}
+
+{% block title %}AI Mood Prediction - Vyze{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <!-- Header -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="modern-card p-4" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+                <div class="d-flex align-items-center justify-content-between">
+                    <div>
+                        <h1 class="display-5 fw-bold mb-2">
+                            <i class="fas fa-robot me-3"></i>
+                            AI Mood Prediction
+                        </h1>
+                        <p class="lead mb-0">Advanced machine learning analysis of your mental health patterns</p>
+                    </div>
+                    <div class="text-end">
+                        <div class="stats-card d-inline-block" style="background: rgba(255,255,255,0.2);">
+                            <div class="stats-icon">
+                                <i class="fas fa-brain"></i>
+                            </div>
+                            <div class="mt-2">
+                                <h4 class="mb-0">AI Powered</h4>
+                                <small class="text-white-50">Smart Analysis</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% if prediction_data %}
+    <!-- Prediction Results -->
+    <div class="row mb-4">
+        <div class="col-lg-8">
+            <div class="modern-card p-4 mb-4">
+                <h3 class="mb-4">
+                    <i class="fas fa-chart-line text-primary me-2"></i>
+                    Your Mood Analysis
+                </h3>
+
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <div class="prediction-card text-center p-4" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 15px;">
+                            <i class="fas fa-star fa-3x mb-3"></i>
+                            <h4>Average Mood</h4>
+                            <h2 class="display-4 fw-bold">{{ prediction_data.avg_mood }}/10</h2>
+                            <p class="mb-0">Based on {{ prediction_data.data_points }} entries</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="prediction-card text-center p-4" style="background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%); color: white; border-radius: 15px;">
+                            <i class="fas fa-chart-line fa-3x mb-3"></i>
+                            <h4>Predicted Mood</h4>
+                            <h2 class="display-4 fw-bold">{{ prediction_data.predicted_mood }}/10</h2>
+                            <p class="mb-0">{{ prediction_data.confidence }} confidence</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Trend Analysis -->
+                <div class="trend-analysis mb-4">
+                    <h5 class="mb-3">
+                        <i class="fas fa-arrow-trend-up me-2"></i>
+                        Trend Analysis
+                    </h5>
+                    <div class="alert alert-{% if prediction_data.trend == 'improving' %}success{% elif prediction_data.trend == 'declining' %}warning{% else %}info{% endif %}">
+                        <h6 class="alert-heading">
+                            <i class="fas fa-info-circle me-2"></i>
+                            Your mood is trending: <strong>{{ prediction_data.trend|title }}</strong>
+                        </h6>
+                        <p class="mb-0">{{ prediction_data.trend_message }}</p>
+                    </div>
+                </div>
+
+                <!-- AI Recommendations -->
+                <div class="ai-recommendations">
+                    <h5 class="mb-3">
+                        <i class="fas fa-lightbulb text-warning me-2"></i>
+                        AI-Powered Recommendations
+                    </h5>
+                    <div class="recommendations-list">
+                        {% for rec in prediction_data.recommendations %}
+                        <div class="recommendation-item d-flex align-items-start mb-3 p-3 bg-light rounded">
+                            <i class="fas fa-check-circle text-success me-3 mt-1"></i>
+                            <div>
+                                <p class="mb-0">{{ rec }}</p>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mood History Chart -->
+            <div class="modern-card p-4">
+                <h5 class="mb-4">
+                    <i class="fas fa-calendar-alt text-info me-2"></i>
+                    Recent Mood History
+                </h5>
+                <div class="chart-container">
+                    <canvas id="moodHistoryChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <!-- AI Insights -->
+            <div class="modern-card p-4 mb-4">
+                <h5 class="mb-3">
+                    <i class="fas fa-brain text-primary me-2"></i>
+                    AI Insights
+                </h5>
+                <div class="insights-list">
+                    <div class="insight-item p-3 mb-3 bg-light rounded">
+                        <i class="fas fa-clock text-info me-2"></i>
+                        <strong>Best Time:</strong> Your mood tends to be highest in the morning
+                    </div>
+                    <div class="insight-item p-3 mb-3 bg-light rounded">
+                        <i class="fas fa-calendar-week text-success me-2"></i>
+                        <strong>Weekly Pattern:</strong> Consistent improvement on weekends
+                    </div>
+                    <div class="insight-item p-3 mb-3 bg-light rounded">
+                        <i class="fas fa-moon text-indigo me-2"></i>
+                        <strong>Sleep Impact:</strong> Better sleep correlates with higher mood scores
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="modern-card p-4 mb-4">
+                <h5 class="mb-3">
+                    <i class="fas fa-bolt text-warning me-2"></i>
+                    Quick Actions
+                </h5>
+                <div class="d-grid gap-2">
+                    <a href="{% url 'log_mood' %}" class="btn btn-primary-modern">
+                        <i class="fas fa-plus me-2"></i>
+                        Log Current Mood
+                    </a>
+                    <a href="{% url 'breathing_exercise' %}" class="btn btn-success-modern">
+                        <i class="fas fa-wind me-2"></i>
+                        Breathing Exercise
+                    </a>
+                    <a href="{% url 'positive_quotes' %}" class="btn btn-info-modern">
+                        <i class="fas fa-quote-left me-2"></i>
+                        Daily Inspiration
+                    </a>
+                    <a href="{% url 'ai_chat_support' %}" class="btn btn-secondary-modern">
+                        <i class="fas fa-comments me-2"></i>
+                        AI Chat Support
+                    </a>
+                </div>
+            </div>
+
+            <!-- Prediction Accuracy -->
+            <div class="modern-card p-4">
+                <h5 class="mb-3">
+                    <i class="fas fa-target text-success me-2"></i>
+                    Prediction Accuracy
+                </h5>
+                <div class="accuracy-meter">
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Model Confidence</span>
+                        <span>{{ prediction_data.confidence }}</span>
+                    </div>
+                    <div class="progress">
+                        <div class="progress-bar bg-success" style="width: {% if prediction_data.confidence == 'High' %}85{% elif prediction_data.confidence == 'Medium' %}65{% else %}45{% endif %}%"></div>
+                    </div>
+                    <small class="text-muted mt-2 d-block">
+                        Based on {{ prediction_data.data_points }} data points and pattern analysis
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <!-- No Data State -->
+    <div class="row">
+        <div class="col-12">
+            <div class="modern-card p-5 text-center">
+                <i class="fas fa-chart-line fa-4x text-muted mb-4"></i>
+                <h3 class="text-muted mb-3">Not Enough Data for AI Analysis</h3>
+                <p class="lead text-muted mb-4">
+                    We need at least 7 mood entries to provide accurate AI-powered predictions and insights.
+                </p>
+                <div class="row justify-content-center">
+                    <div class="col-md-6">
+                        <div class="bg-light p-4 rounded mb-4">
+                            <h5 class="mb-3">To unlock AI features:</h5>
+                            <ul class="text-start">
+                                <li>Log your mood daily for better predictions</li>
+                                <li>Write journal entries for deeper insights</li>
+                                <li>Complete wellness activities regularly</li>
+                                <li>Track your progress over time</li>
+                            </ul>
+                        </div>
+                        <a href="{% url 'log_mood' %}" class="btn btn-primary btn-lg">
+                            <i class="fas fa-plus me-2"></i>
+                            Start Logging Mood
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    {% if prediction_data %}
+    // Mood History Chart
+    const ctx = document.getElementById('moodHistoryChart');
+    if (ctx) {
+        const moodData = {{ recent_moods|length|default:0 }};
+        const labels = [];
+        const data = [];
+
+        // Generate labels and data from recent moods
+        {% for mood in recent_moods %}
+            labels.push('{{ mood.date|date:"M d" }}');
+            data.push({{ mood.mood }});
+        {% endfor %}
+
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels.reverse(),
+                datasets: [{
+                    label: 'Mood Level',
+                    data: data.reverse(),
+                    borderColor: '#667eea',
+                    backgroundColor: 'rgba(102, 126, 234, 0.1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: '#667eea',
+                    pointBorderColor: '#fff',
+                    pointBorderWidth: 2,
+                    pointRadius: 6,
+                    pointHoverRadius: 8
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 10,
+                        grid: { color: 'rgba(0,0,0,0.05)' }
+                    },
+                    x: {
+                        grid: { color: 'rgba(0,0,0,0.05)' }
+                    }
+                },
+                animation: {
+                    duration: 2000,
+                    easing: 'easeInOutQuart'
+                }
+            }
+        });
+    }
+    {% endif %}
+});
+</script>
+{% endblock %}

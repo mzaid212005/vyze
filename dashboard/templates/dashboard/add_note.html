@@ -1,0 +1,48 @@
+{% extends 'accounts/base.html' %}
+
+{% block title %}Add Doctor Note - Vyze{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+        <div class="card">
+            <div class="card-header bg-warning text-dark">
+                <h4 class="mb-0">
+                    <i class="fas fa-sticky-note me-2"></i>
+                    Add Note for {{ patient.username }}
+                </h4>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="note" class="form-label">Doctor's Note</label>
+                        <textarea class="form-control" id="note" name="note" rows="6" placeholder="Enter your observations, suggestions, or feedback for the patient..." required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="is_visible_to_patient" name="is_visible_to_patient" checked>
+                            <label class="form-check-label" for="is_visible_to_patient">
+                                Make this note visible to the patient
+                            </label>
+                            <div class="form-text">
+                                <small class="text-muted">Patient will be able to see this note on their dashboard</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <a href="{% url 'patient_detail' patient.id %}" class="btn btn-outline-secondary">
+                            <i class="fas fa-arrow-left me-2"></i>
+                            Back to Patient
+                        </a>
+                        <button type="submit" class="btn btn-warning">
+                            <i class="fas fa-save me-2"></i>
+                            Save Note
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

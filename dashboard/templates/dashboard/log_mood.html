@@ -1,0 +1,729 @@
+{% extends 'accounts/base.html' %}
+
+{% block title %}Log Your Mood - Vyze{% endblock %}
+
+{% block content %}
+<div class="container-fluid min-vh-100 d-flex align-items-center justify-content-center py-5" style="background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);">
+    <div class="row w-100 justify-content-center">
+        <div class="col-12 col-md-10 col-lg-8 col-xl-6">
+            <!-- Main Mood Logging Card -->
+            <div class="mood-card modern-card p-0 shadow-lg">
+                <!-- Header Section -->
+                <div class="mood-header text-center p-4" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 20px 20px 0 0;">
+                    <div class="mood-icon mb-3">
+                        <i class="fas fa-smile fa-3x"></i>
+                    </div>
+                    <h2 class="fw-bold mb-1">How are you feeling today?</h2>
+                    <p class="mb-0 opacity-75">Take a moment to reflect and log your current mood</p>
+                </div>
+
+                <!-- Form Section -->
+                <div class="mood-body p-4">
+                    <form method="post" class="mood-form">
+                        {% csrf_token %}
+
+                        <!-- Current Date/Time Display -->
+                        <div class="current-time mb-4 text-center">
+                            <div class="time-display" style="background: linear-gradient(135deg, #f6d365 0%, #fda085 100%); padding: 10px 15px; border-radius: 12px; display: inline-flex; align-items: center; box-shadow: 0 4px 8px rgba(0,0,0,0.1); transition: all 0.3s ease; margin-bottom: 10px;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 12px rgba(0,0,0,0.15)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 8px rgba(0,0,0,0.1)'">
+                                <i class="fas fa-calendar-day me-2" style="color: white;"></i>
+                                <span id="current-date" style="color: white; font-weight: 500;"></span>
+                            </div>
+                            <div class="time-display" style="background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%); padding: 10px 15px; border-radius: 12px; display: inline-flex; align-items: center; box-shadow: 0 4px 8px rgba(0,0,0,0.1); transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 12px rgba(0,0,0,0.15)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 8px rgba(0,0,0,0.1)'">
+                                <i class="fas fa-clock me-2" style="color: white;"></i>
+                                <span id="current-time" style="color: white; font-weight: 500;"></span>
+                            </div>
+                        </div>
+
+                        <!-- Mood Scale Section -->
+                        <div class="mood-scale-section mb-4">
+                            <h5 class="section-title mb-4" style="background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 600; display: flex; align-items: center;">
+                                <i class="fas fa-sliders-h me-2" style="background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;"></i>
+                                Mood Intensity (1-10)
+                            </h5>
+
+                            <!-- Visual Mood Scale -->
+                            <div class="mood-scale-visual mb-4">
+                                <div class="mood-faces">
+                                    <div class="mood-face" data-mood="1" style="transform: translateY(0); transition: all 0.3s ease; box-shadow: 0 3px 6px rgba(0,0,0,0.1);" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 6px 12px rgba(0,0,0,0.15)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 3px 6px rgba(0,0,0,0.1)'">
+                                        <i class="far fa-sad-cry"></i>
+                                        <span>Very Low</span>
+                                    </div>
+                                    <div class="mood-face" data-mood="2" style="transform: translateY(0); transition: all 0.3s ease; box-shadow: 0 3px 6px rgba(0,0,0,0.1);" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 6px 12px rgba(0,0,0,0.15)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 3px 6px rgba(0,0,0,0.1)'">
+                                        <i class="far fa-frown"></i>
+                                        <span>Low</span>
+                                    </div>
+                                    <div class="mood-face" data-mood="3" style="transform: translateY(0); transition: all 0.3s ease; box-shadow: 0 3px 6px rgba(0,0,0,0.1);" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 6px 12px rgba(0,0,0,0.15)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 3px 6px rgba(0,0,0,0.1)'">
+                                        <i class="far fa-meh"></i>
+                                        <span>Somewhat Low</span>
+                                    </div>
+                                    <div class="mood-face" data-mood="4" style="transform: translateY(0); transition: all 0.3s ease; box-shadow: 0 3px 6px rgba(0,0,0,0.1);" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 6px 12px rgba(0,0,0,0.15)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 3px 6px rgba(0,0,0,0.1)'">
+                                        <i class="far fa-meh-blank"></i>
+                                        <span>Neutral</span>
+                                    </div>
+                                    <div class="mood-face" data-mood="5" style="transform: translateY(0); transition: all 0.3s ease; box-shadow: 0 3px 6px rgba(0,0,0,0.1);" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 6px 12px rgba(0,0,0,0.15)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 3px 6px rgba(0,0,0,0.1)'">
+                                        <i class="far fa-smile"></i>
+                                        <span>Okay</span>
+                                    </div>
+                                    <div class="mood-face" data-mood="6" style="transform: translateY(0); transition: all 0.3s ease; box-shadow: 0 3px 6px rgba(0,0,0,0.1);" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 6px 12px rgba(0,0,0,0.15)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 3px 6px rgba(0,0,0,0.1)'">
+                                        <i class="far fa-smile-beam"></i>
+                                        <span>Good</span>
+                                    </div>
+                                    <div class="mood-face" data-mood="7" style="transform: translateY(0); transition: all 0.3s ease; box-shadow: 0 3px 6px rgba(0,0,0,0.1);" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 6px 12px rgba(0,0,0,0.15)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 3px 6px rgba(0,0,0,0.1)'">
+                                        <i class="far fa-grin"></i>
+                                        <span>Very Good</span>
+                                    </div>
+                                    <div class="mood-face" data-mood="8" style="transform: translateY(0); transition: all 0.3s ease; box-shadow: 0 3px 6px rgba(0,0,0,0.1);" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 6px 12px rgba(0,0,0,0.15)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 3px 6px rgba(0,0,0,0.1)'">
+                                        <i class="far fa-laugh-beam"></i>
+                                        <span>Great</span>
+                                    </div>
+                                    <div class="mood-face" data-mood="9" style="transform: translateY(0); transition: all 0.3s ease; box-shadow: 0 3px 6px rgba(0,0,0,0.1);" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 6px 12px rgba(0,0,0,0.15)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 3px 6px rgba(0,0,0,0.1)'">
+                                        <i class="far fa-laugh-squint"></i>
+                                        <span>Excellent</span>
+                                    </div>
+                                    <div class="mood-face" data-mood="10" style="transform: translateY(0); transition: all 0.3s ease; box-shadow: 0 3px 6px rgba(0,0,0,0.1);" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 6px 12px rgba(0,0,0,0.15)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 3px 6px rgba(0,0,0,0.1)'">
+                                        <i class="far fa-grin-stars"></i>
+                                        <span>Amazing</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Mood Slider -->
+                            <div class="mood-slider-container mb-3">
+                                <input type="range"
+                                       class="form-range mood-slider"
+                                       id="id_mood"
+                                       name="mood"
+                                       min="1"
+                                       max="10"
+                                       value="5"
+                                       step="1"
+                                       style="height: 8px; cursor: pointer; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+                                <div class="mood-slider-labels" style="display: flex; justify-content: space-between; margin-top: 10px;">
+                                    <span class="slider-label" style="padding: 5px 10px; border-radius: 10px; background-color: #f8f9fa; box-shadow: 0 2px 4px rgba(0,0,0,0.1); transition: all 0.3s ease;">1</span>
+                                    <span class="slider-label active" id="current-mood-value" style="padding: 5px 15px; border-radius: 10px; background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%); color: white; font-weight: bold; box-shadow: 0 4px 8px rgba(0,0,0,0.2); transform: translateY(-3px); transition: all 0.3s ease;">5</span>
+                                    <span class="slider-label" style="padding: 5px 10px; border-radius: 10px; background-color: #f8f9fa; box-shadow: 0 2px 4px rgba(0,0,0,0.1); transition: all 0.3s ease;">10</span>
+                                </div>
+                            </div>
+
+                            <!-- Selected Mood Display -->
+                            <div class="selected-mood-display text-center mb-4">
+                                <div class="selected-mood-emoji" id="selected-emoji">
+                                    <i class="far fa-smile fa-3x text-warning"></i>
+                                </div>
+                                <div class="selected-mood-text mt-2">
+                                    <h4 id="selected-mood-text">Feeling Okay</h4>
+                                    <p class="text-muted" id="selected-mood-description">You're doing alright today</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Notes Section -->
+                        <div class="notes-section mb-4">
+                            <h5 class="section-title mb-3" style="background: linear-gradient(135deg, #0093E9 0%, #80D0C7 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 600; display: flex; align-items: center;">
+                                <i class="fas fa-sticky-note me-2" style="background: linear-gradient(135deg, #0093E9 0%, #80D0C7 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;"></i>
+                                What's on your mind? (Optional)
+                            </h5>
+                            <div class="notes-container">
+                                <textarea class="form-control mood-notes"
+                                          id="id_note"
+                                          name="note"
+                                          rows="4"
+                                          placeholder="Share what's contributing to how you're feeling today... Any thoughts, events, or experiences you'd like to note?"
+                                          style="border-radius: 15px; border: 2px solid #e9ecef; resize: vertical; box-shadow: 0 4px 8px rgba(0,0,0,0.05); transition: all 0.3s ease; padding: 15px;"
+                                          onfocus="this.style.boxShadow='0 8px 16px rgba(0,0,0,0.1)'; this.style.borderColor='#80bdff';"
+                                          onblur="this.style.boxShadow='0 4px 8px rgba(0,0,0,0.05)'; this.style.borderColor='#e9ecef';"></textarea>
+                                <div class="notes-hint" style="margin-top: 10px; background-color: #f8f9fa; border-radius: 10px; padding: 8px 12px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); transition: all 0.3s ease;" onmouseover="this.style.boxShadow='0 4px 8px rgba(0,0,0,0.1)'" onmouseout="this.style.boxShadow='0 2px 4px rgba(0,0,0,0.05)'">
+                                    <small class="text-muted" style="display: flex; align-items: center;">
+                                        <i class="fas fa-lightbulb me-2" style="color: #ffc107;"></i>
+                                        Tip: Writing about your feelings can help you process them better
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Quick Tags Section -->
+                        <div class="quick-tags-section mb-4">
+                            <h5 class="section-title mb-3" style="background: linear-gradient(135deg, #00b09b 0%, #96c93d 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 600; display: flex; align-items: center;">
+                                <i class="fas fa-tags me-2" style="background: linear-gradient(135deg, #00b09b 0%, #96c93d 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;"></i>
+                                Quick Tags (Optional)
+                            </h5>
+                            <div class="quick-tags">
+                                <button type="button" class="btn tag-btn" data-tag="work" style="margin: 5px; padding: 8px 15px; border-radius: 20px; background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); color: white; border: none; font-weight: 500; box-shadow: 0 3px 6px rgba(0,0,0,0.1); transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 6px 12px rgba(0,0,0,0.15)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 3px 6px rgba(0,0,0,0.1)'" onclick="this.classList.toggle('active'); if(this.classList.contains('active')){this.style.background='linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)';}">Work</button>
+                                <button type="button" class="btn tag-btn" data-tag="family" style="margin: 5px; padding: 8px 15px; border-radius: 20px; background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); color: white; border: none; font-weight: 500; box-shadow: 0 3px 6px rgba(0,0,0,0.1); transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 6px 12px rgba(0,0,0,0.15)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 3px 6px rgba(0,0,0,0.1)'" onclick="this.classList.toggle('active'); if(this.classList.contains('active')){this.style.background='linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)';}">Family</button>
+                                <button type="button" class="btn tag-btn" data-tag="friends" style="margin: 5px; padding: 8px 15px; border-radius: 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; font-weight: 500; box-shadow: 0 3px 6px rgba(0,0,0,0.1); transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 6px 12px rgba(0,0,0,0.15)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 3px 6px rgba(0,0,0,0.1)'" onclick="this.classList.toggle('active'); if(this.classList.contains('active')){this.style.background='linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)';}">Friends</button>
+                                <button type="button" class="btn tag-btn" data-tag="health" style="margin: 5px; padding: 8px 15px; border-radius: 20px; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; border: none; font-weight: 500; box-shadow: 0 3px 6px rgba(0,0,0,0.1); transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 6px 12px rgba(0,0,0,0.15)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 3px 6px rgba(0,0,0,0.1)'" onclick="this.classList.toggle('active'); if(this.classList.contains('active')){this.style.background='linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)';}">Health</button>
+                                <button type="button" class="btn tag-btn" data-tag="sleep" style="margin: 5px; padding: 8px 15px; border-radius: 20px; background: linear-gradient(135deg, #0093E9 0%, #80D0C7 100%); color: white; border: none; font-weight: 500; box-shadow: 0 3px 6px rgba(0,0,0,0.1); transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 6px 12px rgba(0,0,0,0.15)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 3px 6px rgba(0,0,0,0.1)'" onclick="this.classList.toggle('active'); if(this.classList.contains('active')){this.style.background='linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)';}">Sleep</button>
+                                <button type="button" class="btn tag-btn" data-tag="exercise" style="margin: 5px; padding: 8px 15px; border-radius: 20px; background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%); color: white; border: none; font-weight: 500; box-shadow: 0 3px 6px rgba(0,0,0,0.1); transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 6px 12px rgba(0,0,0,0.15)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 3px 6px rgba(0,0,0,0.1)'" onclick="this.classList.toggle('active'); if(this.classList.contains('active')){this.style.background='linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)';}">Exercise</button>
+                                <button type="button" class="btn tag-btn" data-tag="food" style="margin: 5px; padding: 8px 15px; border-radius: 20px; background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%); color: white; border: none; font-weight: 500; box-shadow: 0 3px 6px rgba(0,0,0,0.1); transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 6px 12px rgba(0,0,0,0.15)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 3px 6px rgba(0,0,0,0.1)'" onclick="this.classList.toggle('active'); if(this.classList.contains('active')){this.style.background='linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)';}">Food</button>
+                                <button type="button" class="btn tag-btn" data-tag="weather" style="margin: 5px; padding: 8px 15px; border-radius: 20px; background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%); color: white; border: none; font-weight: 500; box-shadow: 0 3px 6px rgba(0,0,0,0.1); transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 6px 12px rgba(0,0,0,0.15)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 3px 6px rgba(0,0,0,0.1)'" onclick="this.classList.toggle('active'); if(this.classList.contains('active')){this.style.background='linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)';}">Weather</button>
+                                <button type="button" class="btn tag-btn" data-tag="stress" style="margin: 5px; padding: 8px 15px; border-radius: 20px; background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%); color: white; border: none; font-weight: 500; box-shadow: 0 3px 6px rgba(0,0,0,0.1); transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 6px 12px rgba(0,0,0,0.15)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 3px 6px rgba(0,0,0,0.1)'" onclick="this.classList.toggle('active'); if(this.classList.contains('active')){this.style.background='linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)';}">Stress</button>
+                                <button type="button" class="btn tag-btn" data-tag="anxiety" style="margin: 5px; padding: 8px 15px; border-radius: 20px; background: linear-gradient(135deg, #ff6e7f 0%, #bfe9ff 100%); color: white; border: none; font-weight: 500; box-shadow: 0 3px 6px rgba(0,0,0,0.1); transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 6px 12px rgba(0,0,0,0.15)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 3px 6px rgba(0,0,0,0.1)'" onclick="this.classList.toggle('active'); if(this.classList.contains('active')){this.style.background='linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)';}">Anxiety</button>
+                                <button type="button" class="btn tag-btn" data-tag="happy" style="margin: 5px; padding: 8px 15px; border-radius: 20px; background: linear-gradient(135deg, #fddb92 0%, #d1fdff 100%); color: white; border: none; font-weight: 500; box-shadow: 0 3px 6px rgba(0,0,0,0.1); transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 6px 12px rgba(0,0,0,0.15)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 3px 6px rgba(0,0,0,0.1)'" onclick="this.classList.toggle('active'); if(this.classList.contains('active')){this.style.background='linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)';}">Happy</button>
+                                <button type="button" class="btn tag-btn" data-tag="tired" style="margin: 5px; padding: 8px 15px; border-radius: 20px; background: linear-gradient(135deg, #c79081 0%, #dfa579 100%); color: white; border: none; font-weight: 500; box-shadow: 0 3px 6px rgba(0,0,0,0.1); transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 6px 12px rgba(0,0,0,0.15)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 3px 6px rgba(0,0,0,0.1)'" onclick="this.classList.toggle('active'); if(this.classList.contains('active')){this.style.background='linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)';}">Tired</button>
+                            </div>
+                            <div class="selected-tags mt-3" id="selected-tags" style="display: flex; flex-wrap: wrap; gap: 8px;"></div>
+                            <input type="hidden" name="selected_tags" id="selected_tags_input" value="">
+                        </div>
+
+                        <!-- Submit Section -->
+                        <div class="submit-section text-center">
+                            <div class="d-flex justify-content-center gap-3">
+                                <button type="submit" class="btn btn-mood-submit btn-lg px-5" style="transform: translateY(0); transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">
+                                    <i class="fas fa-save me-2"></i>
+                                    Save My Mood Entry
+                                </button>
+                                <a href="{% url 'patient_dashboard' %}" class="btn btn-secondary btn-lg px-4" style="transform: translateY(0); transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">
+                                    <i class="fas fa-arrow-left me-2"></i>
+                                    Cancel
+                                </a>
+                            </div>
+                            <p class="mt-3 mb-0">
+                                <small class="text-muted">
+                                    <i class="fas fa-shield-alt me-1"></i>
+                                    Your mood data is private and secure
+                                </small>
+                            </p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Recent Moods Preview -->
+            <div class="recent-moods-preview mt-4">
+                <div class="recent-moods-card modern-card p-3">
+                    <h6 class="mb-3">
+                        <i class="fas fa-history me-2 text-primary"></i>
+                        Recent Mood Entries
+                    </h6>
+                    <div class="recent-moods-list">
+                        <!-- Recent moods will be populated by JavaScript -->
+                        <div class="text-center text-muted">
+                            <small>Recent entries will appear here</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Mood data for descriptions
+const moodData = {
+    1: { emoji: '😢', text: 'Very Low', description: 'Feeling really down today', color: '#dc3545' },
+    2: { emoji: '😞', text: 'Low', description: 'Not feeling great', color: '#e74c3c' },
+    3: { emoji: '😐', text: 'Somewhat Low', description: 'Could be better', color: '#f39c12' },
+    4: { emoji: '😑', text: 'Neutral', description: 'Feeling okay, not great', color: '#f1c40f' },
+    5: { emoji: '🙂', text: 'Okay', description: 'Doing alright', color: '#f39c12' },
+    6: { emoji: '😊', text: 'Good', description: 'Feeling pretty good', color: '#27ae60' },
+    7: { emoji: '😄', text: 'Very Good', description: 'Having a great day', color: '#2ecc71' },
+    8: { emoji: '😁', text: 'Great', description: 'Feeling fantastic', color: '#3498db' },
+    9: { emoji: '😍', text: 'Excellent', description: 'Amazing day!', color: '#9b59b6' },
+    10: { emoji: '🤩', text: 'Amazing', description: 'Best day ever!', color: '#e91e63' }
+};
+
+let selectedTags = [];
+
+// Initialize page
+document.addEventListener('DOMContentLoaded', function() {
+    updateCurrentDateTime();
+    initializeMoodSlider();
+    initializeQuickTags();
+    loadRecentMoods();
+
+    // Update time every minute
+    setInterval(updateCurrentDateTime, 60000);
+});
+
+function updateCurrentDateTime() {
+    const now = new Date();
+    const dateOptions = {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+    };
+    const timeOptions = {
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: true
+    };
+
+    document.getElementById('current-date').textContent = now.toLocaleDateString('en-US', dateOptions);
+    document.getElementById('current-time').textContent = now.toLocaleTimeString('en-US', timeOptions);
+}
+
+function initializeMoodSlider() {
+    const slider = document.getElementById('id_mood');
+    const valueDisplay = document.getElementById('current-mood-value');
+
+    // Update mood display when slider changes
+    slider.addEventListener('input', function() {
+        updateMoodDisplay(this.value);
+    });
+
+    // Initial display
+    updateMoodDisplay(slider.value);
+}
+
+function updateMoodDisplay(moodValue) {
+    const mood = moodData[moodValue];
+    const emojiElement = document.getElementById('selected-emoji');
+    const textElement = document.getElementById('selected-mood-text');
+    const descriptionElement = document.getElementById('selected-mood-description');
+    const valueDisplay = document.getElementById('current-mood-value');
+
+    // Update emoji
+    emojiElement.innerHTML = `<i class="fas fa-${getEmojiClass(moodValue)} fa-3x" style="color: ${mood.color}"></i>`;
+
+    // Update text
+    textElement.textContent = mood.text;
+    descriptionElement.textContent = mood.description;
+    valueDisplay.textContent = moodValue;
+
+    // Update mood faces
+    updateMoodFaces(moodValue);
+}
+
+function getEmojiClass(moodValue) {
+    const emojiClasses = {
+        1: 'sad-cry',
+        2: 'frown',
+        3: 'meh',
+        4: 'meh-blank',
+        5: 'smile',
+        6: 'smile-beam',
+        7: 'grin',
+        8: 'laugh-beam',
+        9: 'laugh-squint',
+        10: 'grin-stars'
+    };
+    return emojiClasses[moodValue] || 'smile';
+}
+
+function updateMoodFaces(selectedMood) {
+    const faces = document.querySelectorAll('.mood-face');
+    faces.forEach(face => {
+        const moodValue = parseInt(face.dataset.mood);
+        if (moodValue === parseInt(selectedMood)) {
+            face.classList.add('active');
+        } else {
+            face.classList.remove('active');
+        }
+    });
+}
+
+function initializeQuickTags() {
+    const tags = document.querySelectorAll('.tag');
+    tags.forEach(tag => {
+        tag.addEventListener('click', function() {
+            toggleTag(this);
+        });
+    });
+}
+
+function toggleTag(tagElement) {
+    const tagValue = tagElement.dataset.tag;
+
+    if (selectedTags.includes(tagValue)) {
+        // Remove tag
+        selectedTags = selectedTags.filter(tag => tag !== tagValue);
+        tagElement.classList.remove('active');
+    } else {
+        // Add tag
+        selectedTags.push(tagValue);
+        tagElement.classList.add('active');
+    }
+
+    updateSelectedTagsDisplay();
+    updateNotesWithTags();
+}
+
+function updateSelectedTagsDisplay() {
+    const selectedTagsContainer = document.getElementById('selected-tags');
+    if (selectedTags.length === 0) {
+        selectedTagsContainer.innerHTML = '';
+        return;
+    }
+
+    selectedTagsContainer.innerHTML = `
+        <div class="selected-tags-list">
+            ${selectedTags.map(tag => `<span class="selected-tag">${tag}</span>`).join('')}
+        </div>
+    `;
+}
+
+function updateNotesWithTags() {
+    const notesTextarea = document.getElementById('id_note');
+    if (selectedTags.length > 0 && !notesTextarea.value.includes('#')) {
+        const tagsText = selectedTags.map(tag => `#${tag}`).join(' ');
+        if (notesTextarea.value.trim()) {
+            notesTextarea.value += '\n\n' + tagsText;
+        } else {
+            notesTextarea.value = tagsText;
+        }
+    }
+}
+
+function loadRecentMoods() {
+    // This would typically load from an API
+    // For now, just show a placeholder
+    const recentMoodsContainer = document.querySelector('.recent-moods-list');
+    recentMoodsContainer.innerHTML = `
+        <div class="text-center text-muted">
+            <small>Your recent mood entries will appear here</small>
+        </div>
+    `;
+}
+
+// Form submission enhancement
+document.querySelector('.mood-form').addEventListener('submit', function(e) {
+    const submitBtn = document.querySelector('.btn-mood-submit');
+    const originalText = submitBtn.innerHTML;
+
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Saving...';
+    submitBtn.disabled = true;
+
+    // Re-enable after 3 seconds (in case of error)
+    setTimeout(() => {
+        submitBtn.innerHTML = originalText;
+        submitBtn.disabled = false;
+    }, 3000);
+});
+</script>
+{% endblock %}
+
+<style>
+/* Mood Card */
+.mood-card {
+    border: none;
+    border-radius: 20px;
+    overflow: hidden;
+    background: white;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+}
+
+.mood-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 30px 80px rgba(0,0,0,0.15);
+}
+
+/* Header Styling */
+.mood-header {
+    position: relative;
+    overflow: hidden;
+}
+
+.mood-header::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+    animation: float 6s ease-in-out infinite;
+}
+
+/* Current Time Display */
+.current-time {
+    background: rgba(102, 126, 234, 0.05);
+    border-radius: 15px;
+    padding: 1rem;
+    margin-bottom: 2rem;
+}
+
+.time-display {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #495057;
+}
+
+/* Mood Scale Section */
+.mood-scale-visual {
+    margin: 2rem 0;
+}
+
+.mood-faces {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.mood-face {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    min-width: 60px;
+}
+
+.mood-face:hover {
+    background: rgba(102, 126, 234, 0.1);
+    transform: scale(1.1);
+}
+
+.mood-face.active {
+    background: rgba(102, 126, 234, 0.2);
+    transform: scale(1.1);
+}
+
+.mood-face i {
+    font-size: 1.5rem;
+    margin-bottom: 0.25rem;
+    color: #6c757d;
+}
+
+.mood-face.active i {
+    color: #667eea;
+}
+
+.mood-face span {
+    font-size: 0.7rem;
+    text-align: center;
+    color: #6c757d;
+    font-weight: 500;
+}
+
+/* Mood Slider */
+.mood-slider-container {
+    position: relative;
+    margin: 2rem 0;
+}
+
+.mood-slider {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 10px;
+    border-radius: 5px;
+    background: linear-gradient(to right, #ff6b6b, #feca57, #48dbfb, #0abde3, #ff9ff3);
+    outline: none;
+    cursor: pointer;
+}
+
+.mood-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: white;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    border: 3px solid #667eea;
+}
+
+.mood-slider::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: white;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    border: 3px solid #667eea;
+}
+
+.mood-slider-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0.5rem;
+    font-weight: 600;
+    color: #6c757d;
+}
+
+.slider-label.active {
+    color: #667eea;
+    font-size: 1.2rem;
+}
+
+/* Selected Mood Display */
+.selected-mood-display {
+    padding: 2rem;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border-radius: 15px;
+    margin: 2rem 0;
+}
+
+.selected-mood-emoji {
+    margin-bottom: 1rem;
+}
+
+/* Notes Section */
+.notes-container {
+    position: relative;
+}
+
+.mood-notes {
+    border: 2px solid #e9ecef;
+    border-radius: 15px;
+    padding: 1rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    transition: all 0.3s ease;
+}
+
+.mood-notes:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+    transform: translateY(-2px);
+}
+
+.notes-hint {
+    margin-top: 0.5rem;
+    text-align: center;
+}
+
+/* Quick Tags */
+.quick-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.tag {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background: #f8f9fa;
+    border: 2px solid #e9ecef;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.tag:hover {
+    background: rgba(102, 126, 234, 0.1);
+    border-color: #667eea;
+    transform: translateY(-2px);
+}
+
+.tag.active {
+    background: #667eea;
+    color: white;
+    border-color: #667eea;
+}
+
+.selected-tags-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.selected-tag {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    background: #667eea;
+    color: white;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+/* Submit Button */
+.btn-mood-submit {
+    background: linear-gradient(45deg, #667eea, #764ba2);
+    border: none;
+    color: white;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.btn-mood-submit::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s;
+}
+
+.btn-mood-submit:hover::before {
+    left: 100%;
+}
+
+.btn-mood-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+}
+
+/* Recent Moods Preview */
+.recent-moods-card {
+    background: white;
+    border-radius: 15px;
+    border: 1px solid rgba(102, 126, 234, 0.1);
+}
+
+/* Section Titles */
+.section-title {
+    color: #495057;
+    border-bottom: 2px solid #e9ecef;
+    padding-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .mood-card {
+        margin: 20px;
+        border-radius: 15px;
+    }
+
+    .mood-header {
+        padding: 30px 20px;
+    }
+
+    .mood-body {
+        padding: 30px 20px;
+    }
+
+    .mood-faces {
+        justify-content: center;
+    }
+
+    .mood-face {
+        min-width: 50px;
+    }
+
+    .mood-face span {
+        font-size: 0.6rem;
+    }
+
+    .quick-tags {
+        justify-content: center;
+    }
+}
+
+/* Animations */
+@keyframes float {
+    0%, 100% { transform: translate(-50%, -50%) rotate(0deg); }
+    50% { transform: translate(-50%, -50%) rotate(180deg); }
+}
+
+/* Loading Animation */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.fa-spinner {
+    animation: spin 1s linear infinite;
+}
+</style>

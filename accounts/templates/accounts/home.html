@@ -1,0 +1,381 @@
+{% extends 'accounts/base.html' %}
+
+{% block title %}Vyze - Professional Mental Health Platform{% endblock %}
+
+{% block content %}
+<!-- Attractive Background Section -->
+<div class="attractive-background">
+    <img src="{% static 'images/mental-wellness-bg.svg' %}" alt="Mental Wellness Background" class="bg-image">
+    <div class="floating-decorations">
+        <img src="{% static 'images/decorative-brain.svg' %}" alt="Brain" class="decoration decoration-1">
+        <img src="{% static 'images/heart-pulse.svg' %}" alt="Heart Pulse" class="decoration decoration-2">
+        <img src="{% static 'images/mindfulness-flower.svg' %}" alt="Mindfulness Flower" class="decoration decoration-3">
+        <div class="geometric-shape shape-1"></div>
+        <div class="geometric-shape shape-2"></div>
+        <div class="geometric-shape shape-3"></div>
+    </div>
+</div>
+
+<!-- Professional Hero Section -->
+<section class="professional-hero">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-7">
+                <div class="hero-content-professional">
+                    <div class="hero-badge">
+                        <i class="fas fa-award me-2"></i>
+                        Trusted by 10,000+ Users Worldwide
+                    </div>
+                    <h1 class="display-3 fw-bold mb-4">
+                        Transform Your Mental Health<br>
+                        <span class="text-primary">Journey Today</span>
+                    </h1>
+                    <p class="lead mb-4 fs-5">
+                        Experience the future of mental wellness with AI-powered mood tracking,
+                        personalized insights, and secure doctor-patient communication.
+                        Your path to better mental health starts here.
+                    </p>
+                    <div class="hero-features mb-4">
+                        <div class="feature-highlight">
+                            <i class="fas fa-brain text-primary me-2"></i>
+                            <span>AI-Powered Analysis</span>
+                        </div>
+                        <div class="feature-highlight">
+                            <i class="fas fa-shield-alt text-success me-2"></i>
+                            <span>HIPAA Compliant</span>
+                        </div>
+                        <div class="feature-highlight">
+                            <i class="fas fa-users text-info me-2"></i>
+                            <span>Expert Support</span>
+                        </div>
+                    </div>
+                    <div class="hero-actions">
+                        <a href="{% url 'register' %}" class="btn btn-attractive-primary btn-lg me-3">
+                            <i class="fas fa-rocket me-2"></i>
+                            Start Your Journey Free
+                        </a>
+                        <a href="#platform" class="btn btn-attractive-outline btn-lg">
+                            <i class="fas fa-play-circle me-2"></i>
+                            See How It Works
+                        </a>
+                    </div>
+                    <div class="hero-trust mt-4">
+                        <small class="text-muted">
+                            <i class="fas fa-check-circle text-success me-1"></i>
+                            No credit card required • 14-day free trial • Cancel anytime
+                        </small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-5">
+                <div class="hero-visual">
+                    <div class="attractive-dashboard-preview">
+                        <div class="preview-header">
+                            <div class="preview-dots">
+                                <span class="dot-red"></span>
+                                <span class="dot-yellow"></span>
+                                <span class="dot-green"></span>
+                            </div>
+                            <div class="preview-title">
+                                <i class="fas fa-brain me-2"></i>
+                                Vyze Mental Health Dashboard
+                            </div>
+                        </div>
+                        <div class="preview-content">
+                            <div class="preview-mood-tracker">
+                                <div class="mood-display">
+                                    <div class="mood-emoji">😊</div>
+                                    <div class="mood-info">
+                                        <div class="mood-rating">8.5/10</div>
+                                        <div class="mood-date">Today</div>
+                                    </div>
+                                </div>
+                                <div class="mood-chart">
+                                    <svg width="100%" height="80" viewBox="0 0 250 80">
+                                        <defs>
+                                            <linearGradient id="moodChartGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                                                <stop offset="0%" style="stop-color:#4ecdc4;stop-opacity:0.8"/>
+                                                <stop offset="100%" style="stop-color:#4ecdc4;stop-opacity:0.2"/>
+                                            </linearGradient>
+                                        </defs>
+                                        <path d="M0,60 L20,50 L40,55 L60,45 L80,50 L100,40 L120,45 L140,35 L160,40 L180,30 L200,35 L220,25 L240,30 L250,80 L0,80 Z" fill="url(#moodChartGrad)"/>
+                                        <polyline points="0,60 20,50 40,55 60,45 80,50 100,40 120,45 140,35 160,40 180,30 200,35 220,25 240,30" fill="none" stroke="#4ecdc4" stroke-width="2"/>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="preview-insights">
+                                <div class="insight-item">
+                                    <i class="fas fa-chart-line text-success"></i>
+                                    <span>Mood trending upward</span>
+                                </div>
+                                <div class="insight-item">
+                                    <i class="fas fa-star text-warning"></i>
+                                    <span>New achievement unlocked</span>
+                                </div>
+                                <div class="insight-item">
+                                    <i class="fas fa-heart text-danger"></i>
+                                    <span>Journal streak: 7 days</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hero-decoration">
+                        <img src="{% static 'images/mindfulness-flower.svg' %}" alt="Mindfulness" class="decoration-flower">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Platform Overview Section -->
+<section id="platform" class="platform-section py-5">
+    <div class="container">
+        <div class="row text-center mb-5">
+            <div class="col-12">
+                <h2 class="display-5 fw-bold mb-3">Enterprise Mental Health Platform</h2>
+                <p class="lead text-muted fs-5">Comprehensive solution for healthcare providers and patients</p>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <!-- For Healthcare Providers -->
+            <div class="col-lg-6">
+                <div class="platform-card">
+                    <div class="platform-header">
+                        <div class="platform-icon">
+                            <i class="fas fa-user-md"></i>
+                        </div>
+                        <h3>For Healthcare Providers</h3>
+                    </div>
+                    <div class="platform-features">
+                        <div class="feature-item">
+                            <i class="fas fa-check-circle text-success me-3"></i>
+                            <span>Real-time patient monitoring dashboard</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check-circle text-success me-3"></i>
+                            <span>Advanced analytics and trend analysis</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check-circle text-success me-3"></i>
+                            <span>Secure patient communication tools</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check-circle text-success me-3"></i>
+                            <span>Automated alert system for critical changes</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check-circle text-success me-3"></i>
+                            <span>HIPAA-compliant data management</span>
+                        </div>
+                    </div>
+                    <div class="platform-cta">
+                        <a href="{% url 'register' %}" class="btn btn-professional-primary">
+                            Join as Healthcare Provider
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- For Patients -->
+            <div class="col-lg-6">
+                <div class="platform-card">
+                    <div class="platform-header">
+                        <div class="platform-icon">
+                            <i class="fas fa-heartbeat"></i>
+                        </div>
+                        <h3>For Patients</h3>
+                    </div>
+                    <div class="platform-features">
+                        <div class="feature-item">
+                            <i class="fas fa-check-circle text-success me-3"></i>
+                            <span>AI-powered mood tracking and analysis</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check-circle text-success me-3"></i>
+                            <span>Personalized wellness recommendations</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check-circle text-success me-3"></i>
+                            <span>Secure connection with healthcare providers</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check-circle text-success me-3"></i>
+                            <span>Interactive mindfulness exercises</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check-circle text-success me-3"></i>
+                            <span>Progress tracking and achievement system</span>
+                        </div>
+                    </div>
+                    <div class="platform-cta">
+                        <a href="{% url 'register' %}" class="btn btn-professional-primary">
+                            Start Your Journey
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Trust Indicators Section -->
+<section class="trust-section py-5">
+    <div class="container">
+        <div class="row text-center mb-5">
+            <div class="col-12">
+                <h2 class="display-5 fw-bold mb-3">Trusted by Healthcare Professionals</h2>
+                <p class="lead text-muted">Join the leading mental health monitoring platform</p>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-lg-3 col-md-6">
+                <div class="trust-metric">
+                    <div class="metric-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="metric-number">10,000+</div>
+                    <div class="metric-label">Active Users</div>
+                    <div class="metric-description">Patients actively using Vyze for mental health monitoring</div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="trust-metric">
+                    <div class="metric-icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div class="metric-number">95%</div>
+                    <div class="metric-label">User Satisfaction</div>
+                    <div class="metric-description">Based on comprehensive user feedback and surveys</div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="trust-metric">
+                    <div class="metric-icon">
+                        <i class="fas fa-hospital"></i>
+                    </div>
+                    <div class="metric-number">500+</div>
+                    <div class="metric-label">Healthcare Partners</div>
+                    <div class="metric-description">Medical institutions and practitioners using Vyze</div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="trust-metric">
+                    <div class="metric-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="metric-number">24/7</div>
+                    <div class="metric-label">Support Available</div>
+                    <div class="metric-description">Round-the-clock technical and clinical support</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Certifications -->
+        <div class="row mt-5">
+            <div class="col-12 text-center">
+                <div class="certifications">
+                    <h4 class="mb-4">Industry Certifications & Compliance</h4>
+                    <div class="cert-badges">
+                        <span class="cert-badge">
+                            <i class="fas fa-shield-alt me-2"></i>
+                            HIPAA Compliant
+                        </span>
+                        <span class="cert-badge">
+                            <i class="fas fa-lock me-2"></i>
+                            SOC 2 Certified
+                        </span>
+                        <span class="cert-badge">
+                            <i class="fas fa-check-circle me-2"></i>
+                            ISO 27001
+                        </span>
+                        <span class="cert-badge">
+                            <i class="fas fa-user-md me-2"></i>
+                            FDA Registered
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Final CTA Section -->
+<section class="enterprise-cta py-5">
+    <div class="container">
+        <div class="row justify-content-center text-center">
+            <div class="col-lg-10">
+                <div class="cta-content">
+                    <h2 class="display-4 fw-bold mb-4">Transform Mental Health Care Delivery</h2>
+                    <p class="lead mb-5 fs-5">
+                        Join the healthcare revolution with Vyze's comprehensive mental health monitoring platform.
+                        Connect patients and providers through secure, AI-powered technology.
+                    </p>
+                    <div class="cta-actions">
+                        <a href="{% url 'register' %}" class="btn btn-enterprise-primary btn-lg me-4">
+                            <i class="fas fa-rocket me-2"></i>
+                            Start Free Trial
+                        </a>
+                        <a href="#platform" class="btn btn-enterprise-outline btn-lg me-4">
+                            <i class="fas fa-play-circle me-2"></i>
+                            Watch Demo
+                        </a>
+                        <a href="{% url 'login' %}" class="btn btn-enterprise-secondary btn-lg">
+                            <i class="fas fa-sign-in-alt me-2"></i>
+                            Sign In
+                        </a>
+                    </div>
+                    <div class="cta-footer mt-4">
+                        <small class="text-muted">
+                            No credit card required • 14-day free trial • Cancel anytime
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Smooth scrolling for anchor links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            target.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+    });
+});
+
+// Add animation on scroll
+const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+};
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+        }
+    });
+}, observerOptions);
+
+// Observe feature cards
+document.querySelectorAll('.feature-card').forEach(card => {
+    card.style.opacity = '0';
+    card.style.transform = 'translateY(30px)';
+    card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    observer.observe(card);
+});
+</script>
+{% endblock %}
